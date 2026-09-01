@@ -1,0 +1,38 @@
+# Credenciais — NUNCA versionar
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Ambientes virtuais
+.venv/
+venv/
+env/
+ENV/
+
+# Distribuição / build
+dist/
+build/
+*.egg-info/
+
+# PyInstaller
+*.spec
+*.exe
+
+# Logs
+*.log
+
+# IDEs
+.vscode/
+.idea/
+*.suo
+*.user
+
+# OS
+Thumbs.db
+.DS_Store
+desktop.ini
