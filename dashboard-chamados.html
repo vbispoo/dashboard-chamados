@@ -269,7 +269,7 @@
 /* ===========================
    ESTADO GLOBAL
 =========================== */
-const API_URL      = '/api/chamados';
+const API_URL      = 'dados.json';
 const DIAS_UTEIS   = 22;
 const EU_ID        = 21826; // destaque no ranking
 
@@ -337,7 +337,7 @@ async function carregarDados(silencioso = false) {
         <div style="grid-column:1/-1;padding:32px;text-align:center;color:var(--red);">
           <div style="font-size:2rem;margin-bottom:12px">⚠️</div>
           <strong>Não foi possível carregar os dados.</strong><br>
-          <span style="font-size:.82rem;color:var(--muted)">Verifique se o servidor está rodando (<code>python app.py</code>).<br>Detalhe: ${err.message}</span><br><br>
+          <span style="font-size:.82rem;color:var(--muted)">O arquivo de dados não foi encontrado ou está desatualizado.<br>Detalhe: ${err.message}</span><br><br>
           <button onclick="location.reload()" style="padding:8px 20px;border-radius:999px;border:1.5px solid var(--accent);background:transparent;color:var(--accent);cursor:pointer;font-weight:700;">🔄 Tentar novamente</button>
         </div>`;
     } else {
