@@ -385,8 +385,7 @@ function atualizarDadosSilencioso() {
     equipe.forEach(p => {
       const btn = document.createElement('button');
       btn.className = 'colab-btn' + (p.id === EU_ID ? ' eu' : '') + (colabAtual?.id === p.id ? ' active' : '');
-      btn.textContent = p.id === EU_ID ? `⭐ ${primeiroNome(p.nome)}` : primeiroNome(p.nome);
-      btn.title = p.nome;
+      btn.textContent = primeiroNome(p.nome);      btn.title = p.nome;
       btn.dataset.id = p.id;
       btn.onclick = () => selecionarColab(p);
       pillsEl.appendChild(btn);
