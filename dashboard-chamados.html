@@ -187,57 +187,13 @@
     .bar-mini { background: var(--border); border-radius: 999px; height: 6px; overflow: hidden; margin-top: 4px; }
     .bar-mini-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width .4s ease; }
 
-  /* ===== MODAL DE FÉRIAS ===== */
-  .modal-overlay {
-    display: none; position: fixed; inset: 0;
-    background: rgba(0,0,0,.6); z-index: 1000;
-    align-items: center; justify-content: center;
-  }
-  .modal-overlay.open { display: flex; }
-  .modal {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 28px 32px;
-    width: 100%; max-width: 480px; max-height: 85vh;
-    overflow-y: auto; animation: fadeIn .2s ease;
-  }
-  .modal h2 { font-size: 1rem; font-weight: 800; margin-bottom: 4px; }
-  .modal p  { font-size: .8rem; color: var(--muted); margin-bottom: 20px; }
-  .modal-colab-select {
-    width: 100%; padding: 8px 12px; border-radius: 8px;
-    border: 1.5px solid var(--border); background: var(--surface2);
-    color: var(--text); font-size: .88rem; margin-bottom: 18px;
-  }
-  .ferias-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-    margin-bottom: 20px;
-  }
-  .ferias-item { display: flex; flex-direction: column; gap: 4px; }
-  .ferias-item label { font-size: .72rem; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
-  .ferias-item input {
-    padding: 6px 10px; border-radius: 8px;
-    border: 1.5px solid var(--border); background: var(--surface2);
-    color: var(--text); font-size: .9rem; width: 100%;
-    text-align: center;
-  }
-  .ferias-item input:focus { outline: none; border-color: var(--accent); }
-  .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
-  .btn-salvar {
-    padding: 8px 22px; border-radius: 999px;
-    background: var(--accent); border: none; color: #fff;
-    font-size: .85rem; font-weight: 700; cursor: pointer;
-  }
-  .btn-cancelar {
-    padding: 8px 22px; border-radius: 999px;
-    background: transparent; border: 1.5px solid var(--border);
-    color: var(--muted); font-size: .85rem; cursor: pointer;
-  }
+    footer { text-align: center; color: var(--muted); font-size: 0.75rem; margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border); }
   </style>
 </head>
 <body>
 
 <header>
   <button class="theme-toggle" id="themeToggle" title="Alternar tema">🌙</button>
-  <button class="theme-toggle" id="btnFerias" onclick="abrirModalFerias()" title="Configurar férias" style="right:52px">🏖️</button>
   <div class="badge">Relatório de Performance</div>
   <h1>Atendimento de Chamados</h1>
   <p id="headerPeriodo">Equipe — carregando…</p>
@@ -313,7 +269,7 @@
 /* ===========================
    ESTADO GLOBAL
 =========================== */
-const API_URL      = 'dados.json';
+const API_URL = 'https://vbispoo.github.io/dashboard-chamados/dados.json';
 const DIAS_UTEIS   = 22;
 const EU_ID        = 21826; // destaque no ranking
 
@@ -363,7 +319,6 @@ async function carregarDados(silencioso = false) {
     if (!json.equipe || json.equipe.length === 0) throw new Error('Nenhum dado retornado pela API.');
 
     equipe = json.equipe;
-    aplicarFeriasEquipe();
     atualizarUltimaAtualizacao(json.atualizado || null);
 
     if (!silencioso) setStatus('✅ Dados carregados', 'ok');
@@ -819,111 +774,8 @@ function atualizarTabela(meses) {
 }
 
 /* ===========================
-   FÉRIAS — localStorage
+   TEMA CLARO / ESCURO
 =========================== */
-const FERIAS_KEY = id => `ferias_${id}`;
-
-function carregarFerias(id) {
-  try { return JSON.parse(localStorage.getItem(FERIAS_KEY(id))) || {}; }
-  catch { return {}; }
-}
-
-function salvarFerias(id, obj) {
-  localStorage.setItem(FERIAS_KEY(id), JSON.stringify(obj));
-}
-
-function aplicarFeriasNaMeses(pessoa) {
-  /* Recalcula diasTrabalhados/chamadosPorDia/chamadosNorm com os dias de férias salvos */
-  const ferias = carregarFerias(pessoa.id);
-  pessoa.meses = pessoa.meses.map(m => {
-    const diasFerias     = parseInt(ferias[m.mes] || 0, 10);
-    const diasTrabalhados = Math.max(1, 22 - diasFerias);
-    const chamadosPorDia  = round2(m.chamados / diasTrabalhados);
-    const chamadosNorm    = Math.round(chamadosPorDia * 22);
-    return { ...m, ferias: diasFerias, diasTrabalhados, chamadosPorDia, chamadosNorm };
-  });
-  return pessoa;
-}
-
-function round2(n) { return Math.round(n * 100) / 100; }
-
-/* Aplica férias em toda a equipe após carregar os dados */
-function aplicarFeriasEquipe() {
-  equipe = equipe.map(p => aplicarFeriasNaMeses({ ...p, meses: [...p.meses] }));
-}
-
-/* ===========================
-   MODAL DE FÉRIAS
-=========================== */
-function abrirModalFerias() {
-  const overlay = document.getElementById('modalFerias');
-  overlay.classList.add('open');
-  preencherSelectColab();
-}
-
-function fecharModalFerias() {
-  document.getElementById('modalFerias').classList.remove('open');
-}
-
-function preencherSelectColab() {
-  const sel = document.getElementById('modalColabSelect');
-  const valorAtual = sel.value;
-  sel.innerHTML = equipe.map(p =>
-    `<option value="${p.id}">${p.nome}</option>`
-  ).join('');
-  if (valorAtual) sel.value = valorAtual;
-  carregarCamposFerias();
-}
-
-function carregarCamposFerias() {
-  const id     = parseInt(document.getElementById('modalColabSelect').value, 10);
-  const pessoa = equipe.find(p => p.id === id);
-  if (!pessoa) return;
-
-  const ferias  = carregarFerias(id);
-  const grid    = document.getElementById('feriasGrid');
-  grid.innerHTML = pessoa.meses.map(m => `
-    <div class="ferias-item">
-      <label>${m.nome}</label>
-      <input type="number" min="0" max="22" id="ferias_${m.mes}"
-        value="${ferias[m.mes] || 0}" placeholder="0">
-    </div>
-  `).join('');
-}
-
-function salvarEFechar() {
-  const id     = parseInt(document.getElementById('modalColabSelect').value, 10);
-  const pessoa = equipe.find(p => p.id === id);
-  if (!pessoa) return;
-
-  const obj = {};
-  pessoa.meses.forEach(m => {
-    const input = document.getElementById(`ferias_${m.mes}`);
-    const val   = parseInt(input?.value || 0, 10);
-    if (val > 0) obj[m.mes] = val;
-  });
-  salvarFerias(id, obj);
-
-  /* Reaplicar e rerenderizar */
-  aplicarFeriasEquipe();
-  if (colabAtual?.id === id) {
-    colabAtual = equipe.find(p => p.id === id);
-    renderKPIsIndividual(colabAtual.meses, mesSelecionado);
-    atualizarGraficos(colabAtual.meses);
-    atualizarTabela(colabAtual.meses);
-    if (mesSelecionado !== null) renderDetalhe(colabAtual.meses, mesSelecionado);
-  } else if (colabAtual === null) {
-    renderRanking();
-    renderKPIsEquipe();
-  }
-
-  fecharModalFerias();
-}
-
-/* Fecha ao clicar fora do modal */
-document.getElementById('modalFerias').addEventListener('click', e => {
-  if (e.target.id === 'modalFerias') fecharModalFerias();
-});
 const themeBtn = document.getElementById('themeToggle');
 const root = document.documentElement;
 
@@ -956,19 +808,5 @@ carregarDados();
 /* Auto-refresh: busca silenciosamente a cada 2 minutos */
 setInterval(() => carregarDados(true), 120_000);
 </script>
-<!-- Modal de Férias -->
-<div class="modal-overlay" id="modalFerias">
-  <div class="modal">
-    <h2>🏖️ Configurar Dias de Férias</h2>
-    <p>Informe quantos dias úteis de férias cada colaborador teve em cada mês. Os cálculos de chamados/dia e normalizado serão ajustados automaticamente.</p>
-    <select class="modal-colab-select" id="modalColabSelect" onchange="carregarCamposFerias()"></select>
-    <div class="ferias-grid" id="feriasGrid"></div>
-    <div class="modal-actions">
-      <button class="btn-cancelar" onclick="fecharModalFerias()">Cancelar</button>
-      <button class="btn-salvar" onclick="salvarEFechar()">💾 Salvar</button>
-    </div>
-  </div>
-</div>
-
 </body>
 </html>
