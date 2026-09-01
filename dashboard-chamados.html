@@ -384,7 +384,7 @@ function atualizarDadosSilencioso() {
     pillsEl.appendChild(btnTodos);
     equipe.forEach(p => {
       const btn = document.createElement('button');
-      btn.className = 'colab-btn' + (p.id === EU_ID ? ' eu' : '') + (colabAtual?.id === p.id ? ' active' : '');
+      btn.className = 'colab-btn' + (colabAtual?.id === p.id ? ' active' : '');
       btn.textContent = primeiroNome(p.nome);      btn.title = p.nome;
       btn.dataset.id = p.id;
       btn.onclick = () => selecionarColab(p);
@@ -416,8 +416,8 @@ function inicializar() {
 
   equipe.forEach(p => {
     const btn = document.createElement('button');
-    btn.className = 'colab-btn' + (p.id === EU_ID ? ' eu' : '');
-    btn.textContent = p.id === EU_ID ? `⭐ ${primeiroNome(p.nome)}` : primeiroNome(p.nome);
+    btn.className = 'colab-btn';
+    btn.textContent = primeiroNome(p.nome);
     btn.title = p.nome;
     btn.dataset.id = p.id;
     btn.onclick = () => selecionarColab(p);
@@ -548,7 +548,7 @@ function renderRanking() {
   const medalhas = ['🥇','🥈','🥉'];
 
   document.getElementById('rankingGrid').innerHTML = comTotal.map((p, i) => `
-    <div class="ranking-card ${p.id === EU_ID ? 'eu' : ''}" onclick="selecionarColab(equipe.find(x=>x.id===${p.id}))">
+    <div class="ranking-card" onclick="selecionarColab(equipe.find(x=>x.id===${p.id}))">
       <div class="ranking-name">${medalhas[i] || (i+1)+'º'} ${p.nome}</div>
       <div class="ranking-sub">${p.meses.length} ${p.meses.length === 1 ? 'mês' : 'meses'} com atendimento</div>
       <div class="ranking-num">${p.total}</div>
