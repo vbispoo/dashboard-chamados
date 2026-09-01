@@ -1,0 +1,780 @@
+{
+  "ok": true,
+  "equipe": [
+    {
+      "id": 25151,
+      "nome": "Caique Santos do Nascimento",
+      "meses": [
+        {
+          "mes": 1,
+          "nome": "Janeiro",
+          "chamados": 38,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 1.73,
+          "chamadosNorm": 38
+        },
+        {
+          "mes": 2,
+          "nome": "Fevereiro",
+          "chamados": 62,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 2.82,
+          "chamadosNorm": 62
+        },
+        {
+          "mes": 3,
+          "nome": "Março",
+          "chamados": 125,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 5.68,
+          "chamadosNorm": 125
+        },
+        {
+          "mes": 4,
+          "nome": "Abril",
+          "chamados": 85,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 3.86,
+          "chamadosNorm": 85
+        },
+        {
+          "mes": 5,
+          "nome": "Maio",
+          "chamados": 78,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 3.55,
+          "chamadosNorm": 78
+        },
+        {
+          "mes": 6,
+          "nome": "Junho",
+          "chamados": 85,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 3.86,
+          "chamadosNorm": 85
+        },
+        {
+          "mes": 7,
+          "nome": "Julho",
+          "chamados": 78,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 3.55,
+          "chamadosNorm": 78
+        },
+        {
+          "mes": 8,
+          "nome": "Agosto",
+          "chamados": 70,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 3.18,
+          "chamadosNorm": 70
+        }
+      ]
+    },
+    {
+      "id": 23416,
+      "nome": "Carlos Vicente Esquaiella",
+      "meses": [
+        {
+          "mes": 1,
+          "nome": "Janeiro",
+          "chamados": 27,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 1.23,
+          "chamadosNorm": 27
+        },
+        {
+          "mes": 2,
+          "nome": "Fevereiro",
+          "chamados": 57,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 2.59,
+          "chamadosNorm": 57
+        },
+        {
+          "mes": 3,
+          "nome": "Março",
+          "chamados": 58,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 2.64,
+          "chamadosNorm": 58
+        },
+        {
+          "mes": 4,
+          "nome": "Abril",
+          "chamados": 45,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 2.05,
+          "chamadosNorm": 45
+        },
+        {
+          "mes": 5,
+          "nome": "Maio",
+          "chamados": 27,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 1.23,
+          "chamadosNorm": 27
+        },
+        {
+          "mes": 6,
+          "nome": "Junho",
+          "chamados": 50,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 2.27,
+          "chamadosNorm": 50
+        },
+        {
+          "mes": 7,
+          "nome": "Julho",
+          "chamados": 64,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 2.91,
+          "chamadosNorm": 64
+        },
+        {
+          "mes": 8,
+          "nome": "Agosto",
+          "chamados": 72,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 3.27,
+          "chamadosNorm": 72
+        },
+        {
+          "mes": 9,
+          "nome": "Setembro",
+          "chamados": 3,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 0.14,
+          "chamadosNorm": 3
+        }
+      ]
+    },
+    {
+      "id": 22132,
+      "nome": "Gabriel Renée da Silva",
+      "meses": [
+        {
+          "mes": 1,
+          "nome": "Janeiro",
+          "chamados": 97,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 4.41,
+          "chamadosNorm": 97
+        },
+        {
+          "mes": 2,
+          "nome": "Fevereiro",
+          "chamados": 205,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 9.32,
+          "chamadosNorm": 205
+        },
+        {
+          "mes": 3,
+          "nome": "Março",
+          "chamados": 220,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 10.0,
+          "chamadosNorm": 220
+        },
+        {
+          "mes": 4,
+          "nome": "Abril",
+          "chamados": 53,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 2.41,
+          "chamadosNorm": 53
+        },
+        {
+          "mes": 5,
+          "nome": "Maio",
+          "chamados": 96,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 4.36,
+          "chamadosNorm": 96
+        },
+        {
+          "mes": 6,
+          "nome": "Junho",
+          "chamados": 115,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 5.23,
+          "chamadosNorm": 115
+        },
+        {
+          "mes": 7,
+          "nome": "Julho",
+          "chamados": 108,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 4.91,
+          "chamadosNorm": 108
+        },
+        {
+          "mes": 8,
+          "nome": "Agosto",
+          "chamados": 122,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 5.55,
+          "chamadosNorm": 122
+        },
+        {
+          "mes": 9,
+          "nome": "Setembro",
+          "chamados": 4,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 0.18,
+          "chamadosNorm": 4
+        }
+      ]
+    },
+    {
+      "id": 21104,
+      "nome": "Gabriel Ribeiro do Carmo",
+      "meses": [
+        {
+          "mes": 1,
+          "nome": "Janeiro",
+          "chamados": 52,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 2.36,
+          "chamadosNorm": 52
+        },
+        {
+          "mes": 2,
+          "nome": "Fevereiro",
+          "chamados": 96,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 4.36,
+          "chamadosNorm": 96
+        },
+        {
+          "mes": 3,
+          "nome": "Março",
+          "chamados": 35,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 1.59,
+          "chamadosNorm": 35
+        },
+        {
+          "mes": 4,
+          "nome": "Abril",
+          "chamados": 62,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 2.82,
+          "chamadosNorm": 62
+        },
+        {
+          "mes": 5,
+          "nome": "Maio",
+          "chamados": 69,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 3.14,
+          "chamadosNorm": 69
+        },
+        {
+          "mes": 6,
+          "nome": "Junho",
+          "chamados": 80,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 3.64,
+          "chamadosNorm": 80
+        },
+        {
+          "mes": 7,
+          "nome": "Julho",
+          "chamados": 74,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 3.36,
+          "chamadosNorm": 74
+        },
+        {
+          "mes": 8,
+          "nome": "Agosto",
+          "chamados": 84,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 3.82,
+          "chamadosNorm": 84
+        },
+        {
+          "mes": 9,
+          "nome": "Setembro",
+          "chamados": 3,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 0.14,
+          "chamadosNorm": 3
+        }
+      ]
+    },
+    {
+      "id": 10141,
+      "nome": "Juvenilson Custódio Araújo Junior",
+      "meses": [
+        {
+          "mes": 1,
+          "nome": "Janeiro",
+          "chamados": 7,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 0.32,
+          "chamadosNorm": 7
+        },
+        {
+          "mes": 2,
+          "nome": "Fevereiro",
+          "chamados": 25,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 1.14,
+          "chamadosNorm": 25
+        },
+        {
+          "mes": 3,
+          "nome": "Março",
+          "chamados": 43,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 1.95,
+          "chamadosNorm": 43
+        },
+        {
+          "mes": 4,
+          "nome": "Abril",
+          "chamados": 14,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 0.64,
+          "chamadosNorm": 14
+        },
+        {
+          "mes": 5,
+          "nome": "Maio",
+          "chamados": 8,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 0.36,
+          "chamadosNorm": 8
+        },
+        {
+          "mes": 6,
+          "nome": "Junho",
+          "chamados": 12,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 0.55,
+          "chamadosNorm": 12
+        },
+        {
+          "mes": 7,
+          "nome": "Julho",
+          "chamados": 7,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 0.32,
+          "chamadosNorm": 7
+        },
+        {
+          "mes": 8,
+          "nome": "Agosto",
+          "chamados": 13,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 0.59,
+          "chamadosNorm": 13
+        },
+        {
+          "mes": 9,
+          "nome": "Setembro",
+          "chamados": 2,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 0.09,
+          "chamadosNorm": 2
+        }
+      ]
+    },
+    {
+      "id": 24311,
+      "nome": "Rafael Amaral Pessoa",
+      "meses": [
+        {
+          "mes": 1,
+          "nome": "Janeiro",
+          "chamados": 46,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 2.09,
+          "chamadosNorm": 46
+        },
+        {
+          "mes": 2,
+          "nome": "Fevereiro",
+          "chamados": 80,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 3.64,
+          "chamadosNorm": 80
+        },
+        {
+          "mes": 3,
+          "nome": "Março",
+          "chamados": 97,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 4.41,
+          "chamadosNorm": 97
+        },
+        {
+          "mes": 4,
+          "nome": "Abril",
+          "chamados": 67,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 3.05,
+          "chamadosNorm": 67
+        },
+        {
+          "mes": 5,
+          "nome": "Maio",
+          "chamados": 62,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 2.82,
+          "chamadosNorm": 62
+        },
+        {
+          "mes": 6,
+          "nome": "Junho",
+          "chamados": 57,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 2.59,
+          "chamadosNorm": 57
+        },
+        {
+          "mes": 7,
+          "nome": "Julho",
+          "chamados": 94,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 4.27,
+          "chamadosNorm": 94
+        },
+        {
+          "mes": 8,
+          "nome": "Agosto",
+          "chamados": 101,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 4.59,
+          "chamadosNorm": 101
+        },
+        {
+          "mes": 9,
+          "nome": "Setembro",
+          "chamados": 2,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 0.09,
+          "chamadosNorm": 2
+        }
+      ]
+    },
+    {
+      "id": 22130,
+      "nome": "Renan Chuqui",
+      "meses": [
+        {
+          "mes": 1,
+          "nome": "Janeiro",
+          "chamados": 37,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 1.68,
+          "chamadosNorm": 37
+        },
+        {
+          "mes": 2,
+          "nome": "Fevereiro",
+          "chamados": 84,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 3.82,
+          "chamadosNorm": 84
+        },
+        {
+          "mes": 3,
+          "nome": "Março",
+          "chamados": 102,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 4.64,
+          "chamadosNorm": 102
+        },
+        {
+          "mes": 4,
+          "nome": "Abril",
+          "chamados": 59,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 2.68,
+          "chamadosNorm": 59
+        },
+        {
+          "mes": 5,
+          "nome": "Maio",
+          "chamados": 66,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 3.0,
+          "chamadosNorm": 66
+        },
+        {
+          "mes": 6,
+          "nome": "Junho",
+          "chamados": 86,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 3.91,
+          "chamadosNorm": 86
+        },
+        {
+          "mes": 7,
+          "nome": "Julho",
+          "chamados": 96,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 4.36,
+          "chamadosNorm": 96
+        },
+        {
+          "mes": 8,
+          "nome": "Agosto",
+          "chamados": 70,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 3.18,
+          "chamadosNorm": 70
+        },
+        {
+          "mes": 9,
+          "nome": "Setembro",
+          "chamados": 1,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 0.05,
+          "chamadosNorm": 1
+        }
+      ]
+    },
+    {
+      "id": 23060,
+      "nome": "Ruan Inácio Roza",
+      "meses": [
+        {
+          "mes": 1,
+          "nome": "Janeiro",
+          "chamados": 20,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 0.91,
+          "chamadosNorm": 20
+        },
+        {
+          "mes": 2,
+          "nome": "Fevereiro",
+          "chamados": 31,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 1.41,
+          "chamadosNorm": 31
+        },
+        {
+          "mes": 3,
+          "nome": "Março",
+          "chamados": 52,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 2.36,
+          "chamadosNorm": 52
+        },
+        {
+          "mes": 4,
+          "nome": "Abril",
+          "chamados": 74,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 3.36,
+          "chamadosNorm": 74
+        },
+        {
+          "mes": 5,
+          "nome": "Maio",
+          "chamados": 43,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 1.95,
+          "chamadosNorm": 43
+        },
+        {
+          "mes": 6,
+          "nome": "Junho",
+          "chamados": 23,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 1.05,
+          "chamadosNorm": 23
+        },
+        {
+          "mes": 7,
+          "nome": "Julho",
+          "chamados": 25,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 1.14,
+          "chamadosNorm": 25
+        },
+        {
+          "mes": 8,
+          "nome": "Agosto",
+          "chamados": 46,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 2.09,
+          "chamadosNorm": 46
+        },
+        {
+          "mes": 9,
+          "nome": "Setembro",
+          "chamados": 2,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 0.09,
+          "chamadosNorm": 2
+        }
+      ]
+    },
+    {
+      "id": 21826,
+      "nome": "Victor Souza Bispo",
+      "meses": [
+        {
+          "mes": 1,
+          "nome": "Janeiro",
+          "chamados": 35,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 1.59,
+          "chamadosNorm": 35
+        },
+        {
+          "mes": 2,
+          "nome": "Fevereiro",
+          "chamados": 50,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 2.27,
+          "chamadosNorm": 50
+        },
+        {
+          "mes": 3,
+          "nome": "Março",
+          "chamados": 58,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 2.64,
+          "chamadosNorm": 58
+        },
+        {
+          "mes": 4,
+          "nome": "Abril",
+          "chamados": 73,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 3.32,
+          "chamadosNorm": 73
+        },
+        {
+          "mes": 5,
+          "nome": "Maio",
+          "chamados": 75,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 3.41,
+          "chamadosNorm": 75
+        },
+        {
+          "mes": 6,
+          "nome": "Junho",
+          "chamados": 57,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 2.59,
+          "chamadosNorm": 57
+        },
+        {
+          "mes": 7,
+          "nome": "Julho",
+          "chamados": 48,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 2.18,
+          "chamadosNorm": 48
+        },
+        {
+          "mes": 8,
+          "nome": "Agosto",
+          "chamados": 45,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 2.05,
+          "chamadosNorm": 45
+        },
+        {
+          "mes": 9,
+          "nome": "Setembro",
+          "chamados": 4,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 0.18,
+          "chamadosNorm": 4
+        }
+      ]
+    }
+  ],
+  "atualizado": "01/09/2026 17:26:59"
+}
