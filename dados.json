@@ -1853,11 +1853,11 @@
           "ano": 2026,
           "mes": 9,
           "nome": "Setembro",
-          "chamados": 27,
+          "chamados": 28,
           "ferias": 0,
           "diasTrabalhados": 22,
-          "chamadosPorDia": 1.23,
-          "chamadosNorm": 27
+          "chamadosPorDia": 1.27,
+          "chamadosNorm": 28
         }
       ]
     },
@@ -9220,5 +9220,5 @@
       ]
     }
   ],
-  "atualizado": "15/09/2026 15:18:57"
+  "atualizado": "15/09/2026 15:19:55"
 }
