@@ -4111,11 +4111,11 @@
           "ano": 2026,
           "mes": 9,
           "nome": "Setembro",
-          "chamados": 41,
+          "chamados": 42,
           "ferias": 0,
           "diasTrabalhados": 22,
-          "chamadosPorDia": 1.86,
-          "chamadosNorm": 41
+          "chamadosPorDia": 1.91,
+          "chamadosNorm": 42
         }
       ]
     },
@@ -9220,5 +9220,5 @@
       ]
     }
   ],
-  "atualizado": "15/09/2026 14:34:54"
+  "atualizado": "15/09/2026 14:35:54"
 }
