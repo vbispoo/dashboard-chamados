@@ -901,19 +901,39 @@ function carregarCamposFerias() {
   const id     = parseInt(document.getElementById('modalColabSelect').value, 10);
   const pessoa = equipe.find(p => p.id === id);
   if (!pessoa) return;
-  document.getElementById('feriasGrid').innerHTML = pessoa.meses.map(m => `
-    <div class="ferias-item">
-      <label>
-        ${m.nome}
-        ${(carregarFerias(id)[m.mes] || 0) > 0
-          ? `<span onclick="excluirFeriasMes(${id},${m.mes})" title="Excluir férias de ${m.nome}"
-               style="float:right;cursor:pointer;color:var(--red);font-size:.9rem;margin-left:4px">🗑️</span>`
-          : ''}
-      </label>
-      <input type="number" min="0" max="22" id="fin_${m.mes}"
-             value="${carregarFerias(id)[m.mes] || 0}">
-    </div>
-  `).join('');
+
+  /* Mostra todos os 12 meses — mesmo os futuros sem dados ainda */
+  const todosMeses = [
+    {mes:1,nome:'Janeiro'},{mes:2,nome:'Fevereiro'},{mes:3,nome:'Março'},
+    {mes:4,nome:'Abril'},{mes:5,nome:'Maio'},{mes:6,nome:'Junho'},
+    {mes:7,nome:'Julho'},{mes:8,nome:'Agosto'},{mes:9,nome:'Setembro'},
+    {mes:10,nome:'Outubro'},{mes:11,nome:'Novembro'},{mes:12,nome:'Dezembro'},
+  ];
+  const anoAtual  = new Date().getFullYear();
+  const mesAtual  = new Date().getMonth() + 1;
+  const mesesComDados = new Set(pessoa.meses.map(m => m.mes));
+
+  document.getElementById('feriasGrid').innerHTML = todosMeses.map(m => {
+    const temDados  = mesesComDados.has(m.mes);
+    const futuro    = m.mes > mesAtual;
+    const diasSalvos = carregarFerias(id)[m.mes] || 0;
+    const labelExtra = futuro
+      ? `<span style="color:var(--muted);font-size:.65rem;margin-left:4px">(futuro)</span>`
+      : !temDados
+        ? `<span style="color:var(--muted);font-size:.65rem;margin-left:4px">(sem dados)</span>`
+        : '';
+    const lixo = diasSalvos > 0
+      ? `<span onclick="excluirFeriasMes(${id},${m.mes})" title="Excluir férias de ${m.nome}"
+             style="float:right;cursor:pointer;color:var(--red);font-size:.9rem;margin-left:4px">🗑️</span>`
+      : '';
+    return `
+      <div class="ferias-item">
+        <label>${m.nome}${labelExtra}${lixo}</label>
+        <input type="number" min="0" max="22" id="fin_${m.mes}"
+               value="${diasSalvos}"
+               style="${futuro ? 'border-color:rgba(245,158,11,.4)' : ''}">
+      </div>`;
+  }).join('');
 }
 
 function salvarEFechar() {
@@ -922,9 +942,9 @@ function salvarEFechar() {
   if (!pessoa) return;
 
   const obj = {};
-  pessoa.meses.forEach(m => {
-    const v = parseInt(document.getElementById(`fin_${m.mes}`)?.value || 0, 10);
-    if (v > 0) obj[m.mes] = v;
+  [1,2,3,4,5,6,7,8,9,10,11,12].forEach(mes => {
+    const v = parseInt(document.getElementById(`fin_${mes}`)?.value || 0, 10);
+    if (v > 0) obj[mes] = v;
   });
   salvarFerias(id, obj);
 
