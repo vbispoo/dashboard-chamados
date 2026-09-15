@@ -55,7 +55,9 @@
     header h1 {
       font-size: 2rem; font-weight: 800;
       background: linear-gradient(90deg, #e2e8f0, var(--accent));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      -webkit-background-clip: text; 
+      -webkit-text-fill-color: transparent;
     }
     header p { color: var(--muted); margin-top: 6px; font-size: 0.95rem; }
 
@@ -188,12 +190,55 @@
     .bar-mini-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width .4s ease; }
 
     footer { text-align: center; color: var(--muted); font-size: 0.75rem; margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border); }
+
+    /* ===== MODAL DE FÉRIAS ===== */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,.65); z-index: 1000;
+      align-items: center; justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px 32px;
+      width: 100%; max-width: 480px; max-height: 85vh;
+      overflow-y: auto; animation: fadeIn .2s ease;
+    }
+    .modal h2 { font-size: 1rem; font-weight: 800; margin-bottom: 4px; }
+    .modal-desc { font-size: .8rem; color: var(--muted); margin-bottom: 18px; }
+    .modal-colab-select {
+      width: 100%; padding: 8px 12px; border-radius: 8px;
+      border: 1.5px solid var(--border); background: var(--surface2);
+      color: var(--text); font-size: .88rem; margin-bottom: 18px;
+      cursor: pointer;
+    }
+    .ferias-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+    .ferias-item { display: flex; flex-direction: column; gap: 4px; }
+    .ferias-item label { font-size: .72rem; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+    .ferias-item input {
+      padding: 6px 10px; border-radius: 8px;
+      border: 1.5px solid var(--border); background: var(--surface2);
+      color: var(--text); font-size: .9rem; width: 100%; text-align: center;
+    }
+    .ferias-item input:focus { outline: none; border-color: var(--accent); }
+    .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+    .btn-salvar {
+      padding: 8px 22px; border-radius: 999px;
+      background: var(--accent); border: none; color: #fff;
+      font-size: .85rem; font-weight: 700; cursor: pointer;
+    }
+    .btn-cancelar {
+      padding: 8px 22px; border-radius: 999px;
+      background: transparent; border: 1.5px solid var(--border);
+      color: var(--muted); font-size: .85rem; cursor: pointer;
+    }
   </style>
 </head>
 <body>
 
 <header>
   <button class="theme-toggle" id="themeToggle" title="Alternar tema">🌙</button>
+  <button class="theme-toggle" onclick="abrirModalFerias()" title="Configurar dias de férias" style="right:52px">🏖️</button>
   <div class="badge">Relatório de Performance</div>
   <h1>Atendimento de Chamados</h1>
   <p id="headerPeriodo">Equipe — carregando…</p>
@@ -312,13 +357,14 @@ function atualizarUltimaAtualizacao(ts) {
 async function carregarDados(silencioso = false) {
   if (!silencioso) setStatus('⏳ Carregando dados do portal…', 'loading');
   try {
-    const resp = await fetch(API_URL);
+    const resp = await fetch(`${API_URL}?t=${Date.now()}`, {cache: 'no-store'});
     if (!resp.ok) { const b = await resp.json().catch(() => ({})); throw new Error(b.erro || `HTTP ${resp.status}`); }
     const json = await resp.json();
     if (!json.ok) throw new Error(json.erro || 'Resposta inválida.');
     if (!json.equipe || json.equipe.length === 0) throw new Error('Nenhum dado retornado pela API.');
 
     equipe = json.equipe;
+    aplicarFeriasEquipe();
     atualizarUltimaAtualizacao(json.atualizado || null);
 
     if (!silencioso) setStatus('✅ Dados carregados', 'ok');
@@ -774,6 +820,97 @@ function atualizarTabela(meses) {
 }
 
 /* ===========================
+   FÉRIAS — localStorage
+=========================== */
+const FERIAS_KEY = id => `ferias_${id}`;
+
+function carregarFerias(id) {
+  try { return JSON.parse(localStorage.getItem(FERIAS_KEY(id))) || {}; }
+  catch { return {}; }
+}
+
+function salvarFerias(id, obj) {
+  localStorage.setItem(FERIAS_KEY(id), JSON.stringify(obj));
+}
+
+function aplicarFeriasNaMeses(pessoa) {
+  const ferias = carregarFerias(pessoa.id);
+  return {
+    ...pessoa,
+    meses: pessoa.meses.map(m => {
+      const diasFerias      = parseInt(ferias[m.mes] || 0, 10);
+      const diasTrabalhados = Math.max(1, 22 - diasFerias);
+      const chamadosPorDia  = Math.round((m.chamados / diasTrabalhados) * 100) / 100;
+      const chamadosNorm    = Math.round(chamadosPorDia * 22);
+      return { ...m, ferias: diasFerias, diasTrabalhados, chamadosPorDia, chamadosNorm };
+    })
+  };
+}
+
+function aplicarFeriasEquipe() {
+  equipe = equipe.map(p => aplicarFeriasNaMeses(p));
+}
+
+/* ===========================
+   MODAL DE FÉRIAS
+=========================== */
+function abrirModalFerias() {
+  document.getElementById('modalFerias').classList.add('open');
+  const sel = document.getElementById('modalColabSelect');
+  sel.innerHTML = equipe.map(p => `<option value="${p.id}">${p.nome}</option>`).join('');
+  /* Pré-seleciona o colaborador atual se houver */
+  if (colabAtual) sel.value = colabAtual.id;
+  carregarCamposFerias();
+}
+
+function fecharModalFerias() {
+  document.getElementById('modalFerias').classList.remove('open');
+}
+
+function carregarCamposFerias() {
+  const id     = parseInt(document.getElementById('modalColabSelect').value, 10);
+  const pessoa = equipe.find(p => p.id === id);
+  if (!pessoa) return;
+  const ferias = carregarFerias(id);
+  document.getElementById('feriasGrid').innerHTML = pessoa.meses.map(m => `
+    <div class="ferias-item">
+      <label>${m.nome}</label>
+      <input type="number" min="0" max="22" id="fin_${m.mes}"
+             value="${ferias[m.mes] || 0}">
+    </div>
+  `).join('');
+}
+
+function salvarEFechar() {
+  const id     = parseInt(document.getElementById('modalColabSelect').value, 10);
+  const pessoa = equipe.find(p => p.id === id);
+  if (!pessoa) return;
+
+  const obj = {};
+  pessoa.meses.forEach(m => {
+    const v = parseInt(document.getElementById(`fin_${m.mes}`)?.value || 0, 10);
+    if (v > 0) obj[m.mes] = v;
+  });
+  salvarFerias(id, obj);
+
+  /* Reaplicar férias em toda a equipe e re-renderizar */
+  aplicarFeriasEquipe();
+
+  if (colabAtual?.id === id) {
+    colabAtual = equipe.find(p => p.id === id);
+    renderKPIsIndividual(colabAtual.meses, mesSelecionado);
+    atualizarGraficos(colabAtual.meses);
+    atualizarTabela(colabAtual.meses);
+    if (mesSelecionado !== null) renderDetalhe(colabAtual.meses, mesSelecionado);
+  } else if (colabAtual === null) {
+    renderRanking();
+    renderKPIsEquipe();
+  }
+
+  fecharModalFerias();
+}
+
+/* ===========================
    TEMA CLARO / ESCURO
 =========================== */
 const themeBtn = document.getElementById('themeToggle');
@@ -808,5 +945,19 @@ carregarDados();
 /* Auto-refresh: busca silenciosamente a cada 2 minutos */
 setInterval(() => carregarDados(true), 120_000);
 </script>
+<!-- Modal de Férias -->
+<div class="modal-overlay" id="modalFerias" onclick="if(event.target===this)fecharModalFerias()">
+  <div class="modal">
+    <h2>🏖️ Dias de Férias por Mês</h2>
+    <p class="modal-desc">Informe quantos dias úteis de férias o colaborador teve em cada mês. Os valores de chamados/dia e normalizado serão recalculados.</p>
+    <select class="modal-colab-select" id="modalColabSelect" onchange="carregarCamposFerias()"></select>
+    <div class="ferias-grid" id="feriasGrid"></div>
+    <div class="modal-actions">
+      <button class="btn-cancelar" onclick="fecharModalFerias()">Cancelar</button>
+      <button class="btn-salvar" onclick="salvarEFechar()">💾 Salvar</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
