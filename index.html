@@ -396,12 +396,29 @@ async function carregarDados(silencioso = false) {
 }
 
 function atualizarDados() {
-  /* Chamado pelo botão 🔄 — atualiza silenciosamente */
+  /* Chama o servidor local que executa gerar_dados.py e faz push */
   const btn = document.getElementById('btnAtualizar');
   if (btn) { btn.textContent = '⏳'; btn.disabled = true; }
-  carregarDados(true).finally(() => {
-    if (btn) { btn.textContent = '🔄'; btn.disabled = false; }
-  });
+
+  fetch('http://127.0.0.1:5001/atualizar', { signal: AbortSignal.timeout(90000) })
+    .then(r => r.json())
+    .then(j => {
+      if (j.ok) {
+        setStatus('✅ Dados atualizados!', 'ok');
+        /* Aguarda 3s para o GitHub Pages processar o push e recarrega o JSON */
+        setTimeout(() => carregarDados(true), 3000);
+      } else {
+        setStatus(`❌ ${j.erro || 'Erro ao atualizar'}`, 'erro');
+      }
+    })
+    .catch(() => {
+      /* Servidor local não está rodando — faz só o fetch do JSON */
+      setStatus('⚠️ Servidor local inativo — recarregando dados existentes', 'loading');
+      carregarDados(true);
+    })
+    .finally(() => {
+      if (btn) { btn.textContent = '🔄'; btn.disabled = false; }
+    });
 }
 
 function atualizarDadosSilencioso() {
