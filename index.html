@@ -521,14 +521,13 @@ function renderKPIsEquipe() {
   const totalEquipe = totais.reduce((a, b) => a + b, 0);
   const melhor = equipe[totais.indexOf(Math.max(...totais))];
   const media  = (totalEquipe / equipe.length).toFixed(1);
-  const eu     = equipe.find(p => p.id === EU_ID);
-  const totalEu = eu ? eu.meses.reduce((s, m) => s + m.chamados, 0) : 0;
+  const menor  = equipe[totais.indexOf(Math.min(...totais))];
 
   renderKPIsHtml([
     { label: 'Total da Equipe',  value: totalEquipe, sub: `${equipe.length} colaboradores`, cls: 'blue' },
     { label: 'Média por Pessoa', value: media, sub: 'chamados no ano', cls: 'purple' },
     { label: 'Maior Volume',     value: Math.max(...totais), sub: primeiroNome(melhor.nome), cls: 'green' },
-    { label: 'Meus Chamados',    value: totalEu, sub: 'Victor Souza Bispo', cls: 'yellow' },
+    { label: 'Menor Volume',     value: Math.min(...totais), sub: primeiroNome(menor.nome), cls: 'yellow' },
   ]);
 }
 
