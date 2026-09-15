@@ -129,7 +129,8 @@
       border-radius: 999px; transition: all .18s; user-select: none;
     }
     .mes-btn:hover { border-color: var(--accent); color: var(--accent); }
-    .mes-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; box-shadow: 0 0 12px rgba(79,142,247,.4); }
+    .mes-btn.ferias { border-color: rgba(245,158,11,.5); color: var(--yellow); }
+    .mes-btn.ferias.active { background: var(--yellow); border-color: var(--yellow); color: #000; box-shadow: 0 0 12px rgba(245,158,11,.4); }
     .btn-todos { cursor: pointer; border: 1.5px solid var(--accent2); background: transparent; color: var(--accent2); font-size: 0.78rem; font-weight: 700; padding: 6px 16px; border-radius: 999px; transition: all .18s; }
     .btn-todos:hover { background: var(--accent2); color: #fff; }
     .hint { text-align: center; font-size: 0.73rem; color: var(--muted); margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 6px; }
@@ -617,8 +618,10 @@ function renderMesPills(meses) {
 
   meses.forEach((m, i) => {
     const btn = document.createElement('button');
-    btn.className = 'mes-btn';
-    btn.textContent = m.nome;
+    const temFerias = m.ferias > 0;
+    btn.className = 'mes-btn' + (temFerias ? ' ferias' : '');
+    btn.textContent = temFerias ? `${m.nome} 🏖️` : m.nome;
+    btn.title = temFerias ? `${m.ferias} dias de férias` : m.nome;
     btn.dataset.idx = i;
     btn.onclick = () => selectMes(i);
     el.appendChild(btn);
@@ -677,6 +680,7 @@ function renderDetalhe(meses, idx) {
    GRÁFICOS
 =========================== */
 function corBase(d, alpha) {
+  if (d.ferias > 0)   return `rgba(245,158,11,${alpha})`;
   if (d.chamados >= 70) return `rgba(79,142,247,${alpha})`;
   if (d.chamados >= 55) return `rgba(124,58,237,${alpha})`;
   return `rgba(99,102,241,${alpha})`;
@@ -798,13 +802,15 @@ function atualizarTabela(meses) {
       varHtml = `<span class="kpi-delta ${cls}" style="font-size:.75rem">${icon} ${Math.abs(pct)}%</span>`;
     }
     let status = '';
-    if (d.chamados >= 70)      status = `<span class="pill pill-green">🔥 Excelente</span>`;
+    if (d.ferias > 0)          status = `<span class="pill pill-yellow">🏖️ ${d.ferias}d férias</span>`;
+    else if (d.chamados >= 70) status = `<span class="pill pill-green">🔥 Excelente</span>`;
     else if (d.chamados >= 55) status = `<span class="pill pill-blue">✅ Ótimo</span>`;
     else if (d.chamados >= 45) status = `<span class="pill pill-muted">Regular</span>`;
     else                       status = `<span class="pill pill-muted">Baixo</span>`;
 
     const barPct = Math.round((d.chamados / maxC) * 100);
-    return `<tr class="${sel?'row-selected':dimmed?'row-dimmed':''}" onclick="selectMes(${i})">
+    const rowStyle = d.ferias > 0 ? ' style="background:rgba(245,158,11,.06)"' : '';
+    return `<tr class="${sel?'row-selected':dimmed?'row-dimmed':''}"${rowStyle} onclick="selectMes(${i})">
       <td><strong>${d.nome}</strong></td>
       <td>${d.chamados}<div class="bar-mini"><div class="bar-mini-fill" style="width:${barPct}%"></div></div></td>
       <td>${d.diasTrabalhados}d</td>
@@ -830,6 +836,14 @@ function carregarFerias(id) {
 
 function salvarFerias(id, obj) {
   localStorage.setItem(FERIAS_KEY(id), JSON.stringify(obj));
+}
+
+function excluirFeriasMes(id, mes) {
+  const obj = carregarFerias(id);
+  delete obj[mes];
+  salvarFerias(id, obj);
+  /* Recarrega os campos do modal */
+  carregarCamposFerias();
 }
 
 function aplicarFeriasNaMeses(pessoa) {
@@ -870,12 +884,17 @@ function carregarCamposFerias() {
   const id     = parseInt(document.getElementById('modalColabSelect').value, 10);
   const pessoa = equipe.find(p => p.id === id);
   if (!pessoa) return;
-  const ferias = carregarFerias(id);
   document.getElementById('feriasGrid').innerHTML = pessoa.meses.map(m => `
     <div class="ferias-item">
-      <label>${m.nome}</label>
+      <label>
+        ${m.nome}
+        ${(carregarFerias(id)[m.mes] || 0) > 0
+          ? `<span onclick="excluirFeriasMes(${id},${m.mes})" title="Excluir férias de ${m.nome}"
+               style="float:right;cursor:pointer;color:var(--red);font-size:.9rem;margin-left:4px">🗑️</span>`
+          : ''}
+      </label>
       <input type="number" min="0" max="22" id="fin_${m.mes}"
-             value="${ferias[m.mes] || 0}">
+             value="${carregarFerias(id)[m.mes] || 0}">
     </div>
   `).join('');
 }
