@@ -1931,11 +1931,11 @@
           "ano": 2020,
           "mes": 9,
           "nome": "Setembro",
-          "chamados": 14,
+          "chamados": 13,
           "ferias": 0,
           "diasTrabalhados": 22,
-          "chamadosPorDia": 0.64,
-          "chamadosNorm": 14
+          "chamadosPorDia": 0.59,
+          "chamadosNorm": 13
         },
         {
           "ano": 2020,
@@ -4853,11 +4853,11 @@
           "ano": 2020,
           "mes": 9,
           "nome": "Setembro",
-          "chamados": 32,
+          "chamados": 31,
           "ferias": 0,
           "diasTrabalhados": 22,
-          "chamadosPorDia": 1.45,
-          "chamadosNorm": 32
+          "chamadosPorDia": 1.41,
+          "chamadosNorm": 31
         },
         {
           "ano": 2020,
@@ -9220,5 +9220,5 @@
       ]
     }
   ],
-  "atualizado": "15/09/2026 15:57:53"
+  "atualizado": "15/09/2026 17:07:08"
 }
