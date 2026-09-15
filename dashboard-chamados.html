@@ -978,7 +978,7 @@ if (localStorage.getItem('dashboard-tema') === 'light') aplicarTema(true);
 carregarDados();
 
 /* Auto-refresh: busca silenciosamente a cada 2 minutos */
-setInterval(() => carregarDados(true), 120_000);
+setInterval(() => carregarDados(true), 60_000);
 </script>
 <!-- Modal de Férias -->
 <div class="modal-overlay" id="modalFerias" onclick="if(event.target===this)fecharModalFerias()">
