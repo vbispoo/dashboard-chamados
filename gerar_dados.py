@@ -148,16 +148,20 @@ def _parse_equipe(rows: list) -> list:
 
 
 def _git_push(mensagem: str) -> bool:
-    """Faz git add dados.json + commit + push. Retorna True se OK."""
+    """Faz git add dados.json + commit + push sem abrir janela."""
+    # CREATE_NO_WINDOW evita janela preta no Windows ao chamar git via pythonw
+    NO_WINDOW = 0x08000000
+
     try:
         subprocess.run(
             ["git", "add", "dados.json"],
-            cwd=BASE_DIR, check=True, capture_output=True
+            cwd=BASE_DIR, check=True, capture_output=True,
+            creationflags=NO_WINDOW
         )
-        # Verifica se há algo para commitar
         result = subprocess.run(
             ["git", "diff", "--cached", "--quiet"],
-            cwd=BASE_DIR, capture_output=True
+            cwd=BASE_DIR, capture_output=True,
+            creationflags=NO_WINDOW
         )
         if result.returncode == 0:
             logger.info("Nenhuma alteração nos dados — push ignorado.")
@@ -165,11 +169,13 @@ def _git_push(mensagem: str) -> bool:
 
         subprocess.run(
             ["git", "commit", "-m", mensagem],
-            cwd=BASE_DIR, check=True, capture_output=True
+            cwd=BASE_DIR, check=True, capture_output=True,
+            creationflags=NO_WINDOW
         )
         subprocess.run(
             ["git", "push"],
-            cwd=BASE_DIR, check=True, capture_output=True
+            cwd=BASE_DIR, check=True, capture_output=True,
+            creationflags=NO_WINDOW
         )
         logger.info("Push realizado com sucesso.")
         return True

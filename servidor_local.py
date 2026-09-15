@@ -57,6 +57,7 @@ class Handler(BaseHTTPRequestHandler):
 
         _em_execucao = True
         try:
+            NO_WINDOW = 0x08000000
             result = subprocess.run(
                 [PYTHONW, GERAR_PY],
                 cwd=BASE_DIR,
@@ -65,6 +66,7 @@ class Handler(BaseHTTPRequestHandler):
                 timeout=90,
                 encoding="utf-8",
                 errors="replace",
+                creationflags=NO_WINDOW,
             )
             ok  = result.returncode == 0
             log = (result.stdout + result.stderr).strip()
