@@ -365,6 +365,7 @@ async function carregarDados(silencioso = false) {
     if (!json.equipe || json.equipe.length === 0) throw new Error('Nenhum dado retornado pela API.');
 
     equipe = json.equipe;
+    if (!_feriasCacheCarregado) await carregarFeriasNuvem();
     aplicarFeriasEquipe();
     atualizarUltimaAtualizacao(json.atualizado || null);
 
@@ -842,24 +843,54 @@ function atualizarTabela(meses) {
 }
 
 /* ===========================
-   FÉRIAS — localStorage
+   FÉRIAS — JSONBin (compartilhado com toda a equipe)
 =========================== */
-const FERIAS_KEY = id => `ferias_${id}`;
+const JSONBIN_URL = 'https://api.jsonbin.io/v3/b/6aa95349ffd5d160530a3315';
+const JSONBIN_KEY = '$2a$10$7eqc9A/GlzhC4O7/5.9pYOKPpkX16jfd12EXaDRPuKvK.xWowvyAO';
 
-function carregarFerias(id) {
-  try { return JSON.parse(localStorage.getItem(FERIAS_KEY(id))) || {}; }
-  catch { return {}; }
+/* Cache local para não fazer fetch a cada carregarCamposFerias */
+let _feriasCache = {};
+let _feriasCacheCarregado = false;
+
+async function carregarFeriasNuvem() {
+  try {
+    const r = await fetch(JSONBIN_URL, {
+      headers: { 'X-Master-Key': JSONBIN_KEY },
+      cache: 'no-store'
+    });
+    const j = await r.json();
+    _feriasCache = j.record?.ferias || {};
+    _feriasCacheCarregado = true;
+  } catch (e) {
+    console.warn('[Férias] Falha ao carregar do JSONBin:', e.message);
+    _feriasCache = {};
+    _feriasCacheCarregado = true;
+  }
 }
 
-function salvarFerias(id, obj) {
-  localStorage.setItem(FERIAS_KEY(id), JSON.stringify(obj));
+async function salvarFeriasNuvem() {
+  try {
+    await fetch(JSONBIN_URL, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Master-Key': JSONBIN_KEY
+      },
+      body: JSON.stringify({ ferias: _feriasCache })
+    });
+  } catch (e) {
+    console.warn('[Férias] Falha ao salvar no JSONBin:', e.message);
+  }
+}
+
+function carregarFerias(id) {
+  return _feriasCache[id] || {};
 }
 
 function excluirFeriasMes(id, mes) {
-  const obj = carregarFerias(id);
-  delete obj[mes];
-  salvarFerias(id, obj);
-  /* Recarrega os campos do modal */
+  if (!_feriasCache[id]) return;
+  delete _feriasCache[id][mes];
+  if (Object.keys(_feriasCache[id]).length === 0) delete _feriasCache[id];
   carregarCamposFerias();
 }
 
@@ -880,7 +911,6 @@ function aplicarFeriasNaMeses(pessoa) {
 function aplicarFeriasEquipe() {
   equipe = equipe.map(p => aplicarFeriasNaMeses(p));
 }
-
 /* ===========================
    MODAL DE FÉRIAS
 =========================== */
@@ -936,7 +966,7 @@ function carregarCamposFerias() {
   }).join('');
 }
 
-function salvarEFechar() {
+async function salvarEFechar() {
   const id     = parseInt(document.getElementById('modalColabSelect').value, 10);
   const pessoa = equipe.find(p => p.id === id);
   if (!pessoa) return;
@@ -946,7 +976,20 @@ function salvarEFechar() {
     const v = parseInt(document.getElementById(`fin_${mes}`)?.value || 0, 10);
     if (v > 0) obj[mes] = v;
   });
-  salvarFerias(id, obj);
+
+  /* Atualiza cache e salva na nuvem */
+  if (Object.keys(obj).length > 0) {
+    _feriasCache[id] = obj;
+  } else {
+    delete _feriasCache[id];
+  }
+
+  const btnSalvar = document.querySelector('.btn-salvar');
+  if (btnSalvar) { btnSalvar.textContent = '⏳ Salvando…'; btnSalvar.disabled = true; }
+
+  await salvarFeriasNuvem();
+
+  if (btnSalvar) { btnSalvar.textContent = '💾 Salvar'; btnSalvar.disabled = false; }
 
   /* Reaplicar férias em toda a equipe e re-renderizar */
   aplicarFeriasEquipe();
