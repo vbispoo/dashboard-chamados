@@ -753,8 +753,8 @@ function renderComparativo() {
   const nomeMeses = ['','Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
   const labels = mesesComuns.map(m => nomeMeses[m]);
 
-  const dadosP1 = mesesComuns.map(m => p1.meses.find(x => x.mes === m)?.chamadosNorm || 0);
-  const dadosP2 = mesesComuns.map(m => p2.meses.find(x => x.mes === m)?.chamadosNorm || 0);
+  const dadosP1 = mesesComuns.map(m => p1.meses.find(x => x.mes === m)?.chamados || 0);
+  const dadosP2 = mesesComuns.map(m => p2.meses.find(x => x.mes === m)?.chamados || 0);
 
   const totalP1 = p1.meses.reduce((s, m) => s + m.chamados, 0);
   const totalP2 = p2.meses.reduce((s, m) => s + m.chamados, 0);
@@ -762,7 +762,7 @@ function renderComparativo() {
   const diffPct = totalP2 > 0 ? ((diff / totalP2) * 100).toFixed(1) : '—';
 
   document.getElementById('compTitulo').textContent =
-    `⚔️ ${primeiroNome(p1.nome)} vs ${primeiroNome(p2.nome)}`;
+    `⚔️ ${primeiroNome(p1.nome)} vs ${primeiroNome(p2.nome)} — Chamados Encerrados`;
   document.getElementById('compResumo').innerHTML = `
     <div style="display:flex;gap:24px;flex-wrap:wrap;justify-content:center;margin-bottom:16px">
       <div style="text-align:center">
