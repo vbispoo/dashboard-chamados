@@ -1,5 +1,5 @@
-"""
-Gerador de dados estáticos para o Dashboard de Chamados.
+﻿"""
+Gerador de dados est├íticos para o Dashboard de Chamados.
 
 Executa a query no portal Apdata, salva o resultado em dados.json
 e faz git add + commit + push automaticamente.
@@ -34,7 +34,7 @@ DADOS_JSON     = BASE_DIR / "dados.json"
 DIAS_UTEIS_REF = 22
 
 NOMES_MESES = [
-    "", "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+    "", "Janeiro", "Fevereiro", "Mar├ºo", "Abril", "Maio", "Junho",
     "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro",
 ]
 
@@ -95,7 +95,7 @@ def _executar_com_retry(sql: str) -> list | None:
             return None
     rows = Requisicao.executaComando(sql)
     if rows is None:
-        logger.warning("Sessão expirada — reautenticando...")
+        logger.warning("Sess├úo expirada ÔÇö reautenticando...")
         if not _login():
             return None
         rows = Requisicao.executaComando(sql)
@@ -164,7 +164,7 @@ def _git_push(mensagem: str) -> bool:
             creationflags=NO_WINDOW
         )
         if result.returncode == 0:
-            logger.info("Nenhuma alteração nos dados — push ignorado.")
+            logger.info("Nenhuma altera├º├úo nos dados ÔÇö push ignorado.")
             return True
 
         subprocess.run(
@@ -189,19 +189,19 @@ def _git_push(mensagem: str) -> bool:
 # ---------------------------------------------------------------------------
 
 def main() -> int:
-    logger.info("=== Iniciando geração de dados ===")
+    logger.info("=== Iniciando gera├º├úo de dados ===")
 
     # 1. Autenticar
     logger.info("Autenticando no portal...")
     if not _login():
-        logger.error("Falha na autenticação. Verifique APP_USER e APP_PASS no .env")
+        logger.error("Falha na autentica├º├úo. Verifique APP_USER e APP_PASS no .env")
         return 1
 
     # 2. Executar query
     logger.info("Executando query...")
     rows = _executar_com_retry(SQL_CHAMADOS)
     if rows is None:
-        logger.error("Query retornou None após retry. Abortando.")
+        logger.error("Query retornou None ap├│s retry. Abortando.")
         return 1
 
     if not rows:
@@ -222,12 +222,12 @@ def main() -> int:
         json.dumps(payload, ensure_ascii=False, indent=2),
         encoding="utf-8"
     )
-    logger.info("dados.json salvo — %d pessoa(s), %s", len(equipe), agora)
+    logger.info("dados.json salvo ÔÇö %d pessoa(s), %s", len(equipe), agora)
 
     # 5. Git push
-    _git_push(f"dados: atualização automática {agora}")
+    _git_push(f"dados: atualiza├º├úo autom├ítica {agora}")
 
-    logger.info("=== Concluído ===")
+    logger.info("=== Conclu├¡do ===")
     return 0
 
 
