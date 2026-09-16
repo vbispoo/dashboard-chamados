@@ -7465,11 +7465,11 @@
           "ano": 2026,
           "mes": 9,
           "nome": "Setembro",
-          "chamados": 37,
+          "chamados": 38,
           "ferias": 0,
           "diasTrabalhados": 22,
-          "chamadosPorDia": 1.68,
-          "chamadosNorm": 37
+          "chamadosPorDia": 1.73,
+          "chamadosNorm": 38
         }
       ]
     },
@@ -8913,11 +8913,11 @@
           "ano": 2026,
           "mes": 9,
           "nome": "Setembro",
-          "chamados": 28,
+          "chamados": 29,
           "ferias": 0,
           "diasTrabalhados": 22,
-          "chamadosPorDia": 1.27,
-          "chamadosNorm": 28
+          "chamadosPorDia": 1.32,
+          "chamadosNorm": 29
         }
       ]
     },
@@ -9220,5 +9220,5 @@
       ]
     }
   ],
-  "atualizado": "16/09/2026 12:14:53"
+  "atualizado": "16/09/2026 12:15:53"
 }
