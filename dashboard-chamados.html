@@ -591,7 +591,8 @@ function renderKPIsIndividual(meses, filtroIdx) {
   const lista  = filtroIdx === null ? meses : [meses[filtroIdx]];
   const total  = lista.reduce((a, b) => a + b.chamados, 0);
   const media  = (total / lista.length).toFixed(1);
-  const melhor = lista.reduce((a, b) => b.chamados > a.chamados ? b : a);
+  /* Melhor mês sempre calculado sobre TODOS os meses, independente da seleção */
+  const melhor = meses.reduce((a, b) => b.chamados > a.chamados ? b : a);
 
   let varPct = null;
   if (filtroIdx !== null && filtroIdx > 0) {
