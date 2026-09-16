@@ -34,7 +34,7 @@ DADOS_JSON     = BASE_DIR / "dados.json"
 DIAS_UTEIS_REF = 22
 
 NOMES_MESES = [
-    "", "Janeiro", "Fevereiro", "Mar├ºo", "Abril", "Maio", "Junho",
+    "", "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
     "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro",
 ]
 
