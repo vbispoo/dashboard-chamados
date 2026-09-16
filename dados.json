@@ -776,14 +776,14 @@
         {
           "mes": 9,
           "nome": "Setembro",
-          "chamados": 29,
+          "chamados": 31,
           "ferias": 0,
           "diasTrabalhados": 22,
-          "chamadosPorDia": 1.32,
-          "chamadosNorm": 29
+          "chamadosPorDia": 1.41,
+          "chamadosNorm": 31
         }
       ]
     }
   ],
-  "atualizado": "16/09/2026 14:39:53"
+  "atualizado": "16/09/2026 14:40:54"
 }
