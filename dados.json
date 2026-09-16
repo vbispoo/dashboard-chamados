@@ -293,11 +293,11 @@
           "ano": 2020,
           "mes": 9,
           "nome": "Setembro",
-          "chamados": 25,
+          "chamados": 24,
           "ferias": 0,
           "diasTrabalhados": 22,
-          "chamadosPorDia": 1.14,
-          "chamadosNorm": 25
+          "chamadosPorDia": 1.09,
+          "chamadosNorm": 24
         },
         {
           "ano": 2020,
@@ -2393,11 +2393,11 @@
           "ano": 2020,
           "mes": 9,
           "nome": "Setembro",
-          "chamados": 19,
+          "chamados": 18,
           "ferias": 0,
           "diasTrabalhados": 22,
-          "chamadosPorDia": 0.86,
-          "chamadosNorm": 19
+          "chamadosPorDia": 0.82,
+          "chamadosNorm": 18
         },
         {
           "ano": 2020,
@@ -4111,11 +4111,11 @@
           "ano": 2026,
           "mes": 9,
           "nome": "Setembro",
-          "chamados": 42,
+          "chamados": 44,
           "ferias": 0,
           "diasTrabalhados": 22,
-          "chamadosPorDia": 1.91,
-          "chamadosNorm": 42
+          "chamadosPorDia": 2.0,
+          "chamadosNorm": 44
         }
       ]
     },
@@ -4837,11 +4837,11 @@
           "ano": 2026,
           "mes": 9,
           "nome": "Setembro",
-          "chamados": 42,
+          "chamados": 43,
           "ferias": 0,
           "diasTrabalhados": 22,
-          "chamadosPorDia": 1.91,
-          "chamadosNorm": 42
+          "chamadosPorDia": 1.95,
+          "chamadosNorm": 43
         }
       ]
     },
@@ -4853,11 +4853,11 @@
           "ano": 2020,
           "mes": 9,
           "nome": "Setembro",
-          "chamados": 31,
+          "chamados": 30,
           "ferias": 0,
           "diasTrabalhados": 22,
-          "chamadosPorDia": 1.41,
-          "chamadosNorm": 31
+          "chamadosPorDia": 1.36,
+          "chamadosNorm": 30
         },
         {
           "ano": 2020,
@@ -5199,11 +5199,11 @@
           "ano": 2020,
           "mes": 9,
           "nome": "Setembro",
-          "chamados": 10,
+          "chamados": 9,
           "ferias": 0,
           "diasTrabalhados": 22,
-          "chamadosPorDia": 0.45,
-          "chamadosNorm": 10
+          "chamadosPorDia": 0.41,
+          "chamadosNorm": 9
         },
         {
           "ano": 2020,
@@ -8151,11 +8151,11 @@
           "ano": 2026,
           "mes": 9,
           "nome": "Setembro",
-          "chamados": 33,
+          "chamados": 36,
           "ferias": 0,
           "diasTrabalhados": 22,
-          "chamadosPorDia": 1.5,
-          "chamadosNorm": 33
+          "chamadosPorDia": 1.64,
+          "chamadosNorm": 36
         }
       ]
     },
@@ -8317,11 +8317,11 @@
           "ano": 2026,
           "mes": 9,
           "nome": "Setembro",
-          "chamados": 15,
+          "chamados": 16,
           "ferias": 0,
           "diasTrabalhados": 22,
-          "chamadosPorDia": 0.68,
-          "chamadosNorm": 15
+          "chamadosPorDia": 0.73,
+          "chamadosNorm": 16
         }
       ]
     },
@@ -8913,11 +8913,11 @@
           "ano": 2026,
           "mes": 9,
           "nome": "Setembro",
-          "chamados": 26,
+          "chamados": 28,
           "ferias": 0,
           "diasTrabalhados": 22,
-          "chamadosPorDia": 1.18,
-          "chamadosNorm": 26
+          "chamadosPorDia": 1.27,
+          "chamadosNorm": 28
         }
       ]
     },
@@ -9220,5 +9220,5 @@
       ]
     }
   ],
-  "atualizado": "15/09/2026 18:14:54"
+  "atualizado": "16/09/2026 11:29:13"
 }
