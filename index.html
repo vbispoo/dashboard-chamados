@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dashboard de Atendimento — Equipe</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <style>
     :root {
       --bg: #0f1117;
@@ -192,6 +193,11 @@
 
     footer { text-align: center; color: var(--muted); font-size: 0.75rem; margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border); }
 
+    /* ===== COMPARATIVO ===== */
+    .colab-btn.comparativo { background: rgba(245,158,11,.15); border-color: var(--yellow); color: var(--yellow); }
+    .comp-charts { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+    @media (max-width: 860px) { .comp-charts { grid-template-columns: 1fr; } }
+
     /* ===== MODAL DE FÉRIAS ===== */
     .modal-overlay {
       display: none; position: fixed; inset: 0;
@@ -251,8 +257,26 @@
   <div class="colab-pills" id="colabPills"></div>
 </div>
 
+<!-- Resumo do mês atual -->
+<div id="resumoMesAtual" style="display:none;margin-bottom:20px"></div>
+
 <!-- KPIs -->
 <div class="grid-kpis" id="kpis"></div>
+
+<!-- Comparativo entre colaboradores -->
+<div id="comparativoSection" style="display:none;margin-bottom:20px">
+  <div class="card">
+    <div class="card-title" style="justify-content:space-between">
+      <span id="compTitulo"></span>
+      <span onclick="deselectComparativo()" style="cursor:pointer;color:var(--muted);font-size:.8rem">✕ Fechar</span>
+    </div>
+    <div id="compResumo"></div>
+    <div class="comp-charts">
+      <div><canvas id="chartBarComp" height="160"></canvas></div>
+      <div><canvas id="chartLineComp" height="160"></canvas></div>
+    </div>
+  </div>
+</div>
 
 <!-- Ranking (visível apenas em "Todos") -->
 <div id="rankingSection" style="display:none">
@@ -266,7 +290,7 @@
 <div id="individualSection" style="display:none">
   <!-- Botões de mês -->
   <div class="mes-pills" id="mesPills"></div>
-  <div class="hint">💡 Clique em um mês para ver o detalhe</div>
+  <div class="hint">💡 Clique em um mês para ver o detalhe • Selecione outro colaborador para comparar</div>
 
   <!-- Detalhe do mês -->
   <div class="mes-detail" id="mesDetail">
@@ -308,6 +332,11 @@
     style="margin-left:10px;background:transparent;border:1px solid var(--border);color:var(--muted);
            border-radius:999px;padding:2px 10px;font-size:.72rem;cursor:pointer;transition:all .2s;">
     🔄
+  </button>
+  <button id="btnExportar" onclick="exportarImagem()" title="Exportar como imagem"
+    style="margin-left:6px;background:transparent;border:1px solid var(--border);color:var(--muted);
+           border-radius:999px;padding:2px 10px;font-size:.72rem;cursor:pointer;transition:all .2s;">
+    📷
   </button>
 </footer>
 
@@ -427,6 +456,7 @@ function atualizarDadosSilencioso() {
   if (colabAtual === null) {
     renderRanking();
     renderKPIsEquipe();
+    renderResumoMesAtual();
   } else {
     /* Reencontra o colaborador atualizado na nova lista */
     const novo = equipe.find(p => p.id === colabAtual.id);
@@ -483,9 +513,15 @@ function inicializar() {
     const btn = document.createElement('button');
     btn.className = 'colab-btn';
     btn.textContent = primeiroNome(p.nome);
-    btn.title = p.nome;
+    btn.title = p.nome + ' • Clique duplo para comparar';
     btn.dataset.id = p.id;
-    btn.onclick = () => selecionarColab(p);
+    btn.onclick = () => {
+      if (colabAtual !== null && colabAtual.id !== p.id) {
+        toggleComparativo(p);
+      } else {
+        selecionarColab(p);
+      }
+    };
     pillsEl.appendChild(btn);
   });
 
@@ -494,6 +530,7 @@ function inicializar() {
 
   /* Exibe ranking inicial */
   selecionarColab(null);
+  renderResumoMesAtual();
 }
 
 function primeiroNome(nome) {
@@ -507,6 +544,7 @@ function primeiroNome(nome) {
 function selecionarColab(pessoa) {
   colabAtual = pessoa;
   mesSelecionado = null;
+  deselectComparativo();
 
   /* Atualiza botões */
   document.querySelectorAll('.colab-btn').forEach(b => b.classList.remove('active'));
@@ -583,6 +621,30 @@ function renderKPIsIndividual(meses, filtroIdx) {
   ]);
 }
 
+function animarNumero(el, valorFinal) {
+  const isFloat   = String(valorFinal).includes('.');
+  const isPercent = String(valorFinal).includes('%');
+  const isSinal   = String(valorFinal).startsWith('+') || String(valorFinal).startsWith('-');
+
+  const numFinal = parseFloat(String(valorFinal).replace(/[^0-9.\-]/g, ''));
+  if (isNaN(numFinal)) { el.textContent = valorFinal; return; }
+
+  const duracao  = 600;
+  const inicio   = performance.now();
+  const numInicio = 0;
+
+  function step(agora) {
+    const progresso = Math.min((agora - inicio) / duracao, 1);
+    const ease      = 1 - Math.pow(1 - progresso, 3); // ease-out cubic
+    const atual     = numInicio + (numFinal - numInicio) * ease;
+    const formatado = isFloat ? atual.toFixed(1) : Math.round(atual).toLocaleString('pt-BR');
+    el.textContent  = (isSinal && atual > 0 ? '+' : '') + formatado + (isPercent ? '%' : '');
+    if (progresso < 1) requestAnimationFrame(step);
+    else el.textContent = valorFinal; // garante valor exato no final
+  }
+  requestAnimationFrame(step);
+}
+
 function renderKPIsHtml(kpis) {
   document.getElementById('kpis').innerHTML = kpis.map(k => {
     let delta = '';
@@ -593,15 +655,184 @@ function renderKPIsHtml(kpis) {
     }
     return `<div class="kpi ${k.cls}">
       <div class="kpi-label">${k.label}</div>
-      <div class="kpi-value">${k.value}</div>
+      <div class="kpi-value" data-val="${k.value}"></div>
       <div class="kpi-sub">${k.sub}</div>${delta}
     </div>`;
   }).join('');
+  /* Anima cada valor após renderizar */
+  document.querySelectorAll('.kpi-value[data-val]').forEach(el => {
+    animarNumero(el, el.dataset.val);
+  });
 }
 
 /* ===========================
-   RANKING
+   COMPARATIVO ENTRE COLABORADORES
 =========================== */
+let colabComparativo = null; // segundo colaborador selecionado para comparar
+let chartBarComp, chartLineComp; // gráficos do comparativo
+
+function toggleComparativo(pessoa) {
+  /* Se já está em modo individual com colabAtual, ativa o comparativo */
+  if (colabAtual === null) { selecionarColab(pessoa); return; }
+  if (pessoa.id === colabAtual.id) { deselectComparativo(); return; }
+
+  colabComparativo = pessoa;
+
+  /* Marca o segundo botão visualmente */
+  document.querySelectorAll('.colab-btn').forEach(b => {
+    b.classList.remove('comparativo');
+    if (+b.dataset.id === pessoa.id) b.classList.add('comparativo');
+  });
+
+  renderComparativo();
+}
+
+function deselectComparativo() {
+  colabComparativo = null;
+  document.querySelectorAll('.colab-btn').forEach(b => b.classList.remove('comparativo'));
+  document.getElementById('comparativoSection').style.display = 'none';
+}
+
+function renderComparativo() {
+  const sec = document.getElementById('comparativoSection');
+  sec.style.display = 'block';
+  sec.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  const p1 = colabAtual;
+  const p2 = colabComparativo;
+
+  /* Meses em comum */
+  const mesesP1 = p1.meses.map(m => m.mes);
+  const mesesP2 = p2.meses.map(m => m.mes);
+  const mesesComuns = [...new Set([...mesesP1, ...mesesP2])].sort((a, b) => a - b);
+  const nomeMeses = ['','Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  const labels = mesesComuns.map(m => nomeMeses[m]);
+
+  const dadosP1 = mesesComuns.map(m => p1.meses.find(x => x.mes === m)?.chamadosNorm || 0);
+  const dadosP2 = mesesComuns.map(m => p2.meses.find(x => x.mes === m)?.chamadosNorm || 0);
+
+  const totalP1 = p1.meses.reduce((s, m) => s + m.chamados, 0);
+  const totalP2 = p2.meses.reduce((s, m) => s + m.chamados, 0);
+  const diff    = totalP1 - totalP2;
+  const diffPct = totalP2 > 0 ? ((diff / totalP2) * 100).toFixed(1) : '—';
+
+  document.getElementById('compTitulo').textContent =
+    `⚔️ ${primeiroNome(p1.nome)} vs ${primeiroNome(p2.nome)}`;
+  document.getElementById('compResumo').innerHTML = `
+    <div style="display:flex;gap:24px;flex-wrap:wrap;justify-content:center;margin-bottom:16px">
+      <div style="text-align:center">
+        <div style="font-size:.7rem;color:var(--muted);text-transform:uppercase">${primeiroNome(p1.nome)}</div>
+        <div style="font-size:1.8rem;font-weight:800;color:#4f8ef7">${totalP1}</div>
+      </div>
+      <div style="text-align:center;align-self:center">
+        <div class="kpi-delta ${diff >= 0 ? 'delta-up' : 'delta-down'}" style="font-size:.9rem">
+          ${diff >= 0 ? '▲' : '▼'} ${Math.abs(diffPct)}%
+        </div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:.7rem;color:var(--muted);text-transform:uppercase">${primeiroNome(p2.nome)}</div>
+        <div style="font-size:1.8rem;font-weight:800;color:#f59e0b">${totalP2}</div>
+      </div>
+    </div>`;
+
+  /* Destrói gráficos anteriores se existirem */
+  if (chartBarComp)  { chartBarComp.destroy();  chartBarComp  = null; }
+  if (chartLineComp) { chartLineComp.destroy(); chartLineComp = null; }
+
+  const tc = '#94a3b8';
+  const gc = 'rgba(255,255,255,0.06)';
+
+  chartBarComp = new Chart(document.getElementById('chartBarComp'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        { label: primeiroNome(p1.nome), data: dadosP1, backgroundColor: 'rgba(79,142,247,.75)', borderRadius: 6 },
+        { label: primeiroNome(p2.nome), data: dadosP2, backgroundColor: 'rgba(245,158,11,.75)', borderRadius: 6 },
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { labels: { color: tc } } },
+      scales: {
+        x: { grid: { color: gc }, ticks: { color: tc } },
+        y: { grid: { color: gc }, ticks: { color: tc }, beginAtZero: true },
+      }
+    }
+  });
+
+  chartLineComp = new Chart(document.getElementById('chartLineComp'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        { label: primeiroNome(p1.nome), data: dadosP1, borderColor: '#4f8ef7', backgroundColor: 'rgba(79,142,247,.1)', tension: 0.4, fill: true, pointRadius: 5 },
+        { label: primeiroNome(p2.nome), data: dadosP2, borderColor: '#f59e0b', backgroundColor: 'rgba(245,158,11,.1)', tension: 0.4, fill: true, pointRadius: 5 },
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { labels: { color: tc } } },
+      scales: {
+        x: { grid: { color: gc }, ticks: { color: tc } },
+        y: { grid: { color: gc }, ticks: { color: tc }, beginAtZero: true },
+      }
+    }
+  });
+}
+function renderResumoMesAtual() {
+  const mesAtual  = new Date().getMonth() + 1;
+  const nomeMeses = ['','Janeiro','Fevereiro','Março','Abril','Maio','Junho',
+    'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+
+  /* Soma chamados de todos da equipe no mês atual e no anterior */
+  let totalAtual = 0, totalAnterior = 0;
+  let pessoasAtual = 0, pessoasAnterior = 0;
+
+  equipe.forEach(p => {
+    const mAtual = p.meses.find(m => m.mes === mesAtual);
+    const mAnt   = p.meses.find(m => m.mes === mesAtual - 1);
+    if (mAtual)    { totalAtual    += mAtual.chamadosNorm; pessoasAtual++; }
+    if (mAnt)      { totalAnterior += mAnt.chamadosNorm;   pessoasAnterior++; }
+  });
+
+  const el = document.getElementById('resumoMesAtual');
+  if (totalAtual === 0 && totalAnterior === 0) { el.style.display = 'none'; return; }
+
+  const varPct   = totalAnterior > 0
+    ? (((totalAtual - totalAnterior) / totalAnterior) * 100).toFixed(1)
+    : null;
+  const varCls   = varPct === null ? 'delta-neu' : varPct >= 0 ? 'delta-up' : 'delta-down';
+  const varIcon  = varPct === null ? '—' : varPct >= 0 ? '▲' : '▼';
+  const varTexto = varPct !== null ? `${varIcon} ${Math.abs(varPct)}% vs ${nomeMeses[mesAtual-1]}` : '—';
+
+  el.style.display = 'block';
+  el.innerHTML = `
+    <div class="card" style="border-color:var(--accent);background:linear-gradient(135deg,var(--surface),var(--surface2))">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px">
+        <div>
+          <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:4px">
+            📅 ${nomeMeses[mesAtual]} em andamento
+          </div>
+          <div style="font-size:2rem;font-weight:800;color:var(--accent)">${totalAtual} <span style="font-size:1rem;color:var(--muted)">chamados (normalizado)</span></div>
+        </div>
+        <div style="display:flex;gap:24px;flex-wrap:wrap">
+          <div style="text-align:center">
+            <div style="font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">${nomeMeses[mesAtual-1] || 'Mês anterior'}</div>
+            <div style="font-size:1.4rem;font-weight:800;color:var(--muted)">${totalAnterior}</div>
+          </div>
+          <div style="text-align:center">
+            <div style="font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">Variação</div>
+            <div class="kpi-delta ${varCls}" style="font-size:.9rem;margin-top:4px">${varTexto}</div>
+          </div>
+          <div style="text-align:center">
+            <div style="font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">Pessoas ativas</div>
+            <div style="font-size:1.4rem;font-weight:800">${pessoasAtual}</div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
 function renderRanking() {
   const comTotal = equipe.map(p => ({
     ...p,
@@ -1034,6 +1265,40 @@ function aplicarTema(light) {
 
 themeBtn.addEventListener('click', () => aplicarTema(!root.classList.contains('light')));
 if (localStorage.getItem('dashboard-tema') === 'light') aplicarTema(true);
+
+/* ===========================
+   EXPORTAR IMAGEM
+=========================== */
+async function exportarImagem() {
+  const btn = document.getElementById('btnExportar');
+  btn.textContent = '⏳'; btn.disabled = true;
+
+  /* Captura a área visível do dashboard (exclui modal e footer) */
+  const alvo = document.body;
+  try {
+    const canvas = await html2canvas(alvo, {
+      backgroundColor: getComputedStyle(document.documentElement)
+        .getPropertyValue('--bg').trim() || '#0f1117',
+      scale: 2,
+      useCORS: true,
+      ignoreElements: el => el.id === 'modalFerias' || el.id === 'statusBanner',
+    });
+
+    const nome = colabAtual
+      ? `dashboard_${primeiroNome(colabAtual.nome).replace(' ','_')}_${new Date().toLocaleDateString('pt-BR').replace(/\//g,'-')}.png`
+      : `dashboard_equipe_${new Date().toLocaleDateString('pt-BR').replace(/\//g,'-')}.png`;
+
+    const link = document.createElement('a');
+    link.download = nome;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  } catch (e) {
+    setStatus('❌ Erro ao exportar imagem', 'erro');
+    console.error(e);
+  } finally {
+    btn.textContent = '📷'; btn.disabled = false;
+  }
+}
 
 /* ===========================
    INICIAR
