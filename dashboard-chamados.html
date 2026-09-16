@@ -296,7 +296,7 @@
       style="background:transparent;border:1.5px solid var(--border);color:var(--muted);
              font-size:.78rem;font-weight:700;padding:5px 16px;border-radius:999px;
              cursor:pointer;transition:all .2s;" >
-      ⚔️ Comparar
+      ⚔️ Comparar com outro colaborador
     </button>
   </div>
   <div id="dicaComparativo" style="display:none;justify-content:center;margin-bottom:10px">
@@ -732,7 +732,7 @@ function deselectComparativo() {
   document.getElementById('comparativoSection').style.display = 'none';
   const btnComp = document.getElementById('btnComparar');
   const dica    = document.getElementById('dicaComparativo');
-  if (btnComp) { btnComp.textContent = '⚔️ Comparar'; btnComp.classList.remove('ativo'); }
+  if (btnComp) { btnComp.textContent = '⚔️ Comparar com outro colaborador'; btnComp.classList.remove('ativo'); }
   if (dica)    { dica.style.display = 'none'; }
   if (chartBarComp)  { chartBarComp.destroy();  chartBarComp  = null; }
   if (chartLineComp) { chartLineComp.destroy(); chartLineComp = null; }
