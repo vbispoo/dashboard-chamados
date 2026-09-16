@@ -602,11 +602,11 @@
         {
           "mes": 9,
           "nome": "Setembro",
-          "chamados": 37,
+          "chamados": 38,
           "ferias": 0,
           "diasTrabalhados": 22,
-          "chamadosPorDia": 1.68,
-          "chamadosNorm": 37
+          "chamadosPorDia": 1.73,
+          "chamadosNorm": 38
         }
       ]
     },
@@ -785,5 +785,5 @@
       ]
     }
   ],
-  "atualizado": "16/09/2026 14:30:54"
+  "atualizado": "16/09/2026 14:31:54"
 }
