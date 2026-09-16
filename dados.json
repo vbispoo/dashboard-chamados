@@ -399,11 +399,11 @@
           "ano": 2020,
           "mes": 9,
           "nome": "Setembro",
-          "chamados": 25,
+          "chamados": 24,
           "ferias": 0,
           "diasTrabalhados": 22,
-          "chamadosPorDia": 1.14,
-          "chamadosNorm": 25
+          "chamadosPorDia": 1.09,
+          "chamadosNorm": 24
         },
         {
           "ano": 2020,
@@ -9220,5 +9220,5 @@
       ]
     }
   ],
-  "atualizado": "16/09/2026 11:59:54"
+  "atualizado": "16/09/2026 12:00:54"
 }
