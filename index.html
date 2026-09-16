@@ -197,6 +197,7 @@
     .colab-btn.comparativo { background: rgba(245,158,11,.15); border-color: var(--yellow); color: var(--yellow); }
     .comp-charts { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
     @media (max-width: 860px) { .comp-charts { grid-template-columns: 1fr; } }
+    #btnComparar.ativo { border-color: var(--red); color: var(--red); }
 
     /* ===== MODAL DE FÉRIAS ===== */
     .modal-overlay {
@@ -290,7 +291,21 @@
 <div id="individualSection" style="display:none">
   <!-- Botões de mês -->
   <div class="mes-pills" id="mesPills"></div>
-  <div class="hint">💡 Clique em um mês para ver o detalhe • Selecione outro colaborador para comparar</div>
+  <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:12px">
+    <button id="btnComparar" onclick="ativarModoComparativo()" title="Comparar com outro colaborador"
+      style="background:transparent;border:1.5px solid var(--border);color:var(--muted);
+             font-size:.78rem;font-weight:700;padding:5px 16px;border-radius:999px;
+             cursor:pointer;transition:all .2s;" >
+      ⚔️ Comparar
+    </button>
+  </div>
+  <div id="dicaComparativo" style="display:none;justify-content:center;margin-bottom:10px">
+    <span style="background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3);
+                 color:var(--yellow);font-size:.75rem;padding:5px 14px;border-radius:999px;">
+      👆 Clique em outro colaborador para comparar
+    </span>
+  </div>
+  <div class="hint">💡 Clique em um mês para ver o detalhe</div>
 
   <!-- Detalhe do mês -->
   <div class="mes-detail" id="mesDetail">
@@ -474,10 +489,16 @@ function atualizarDadosSilencioso() {
     pillsEl.appendChild(btnTodos);
     equipe.forEach(p => {
       const btn = document.createElement('button');
-      btn.className = 'colab-btn' + (colabAtual?.id === p.id ? ' active' : '');
+      btn.className = 'colab-btn' + (colabAtual?.id === p.id ? ' active' : '') + (colabComparativo?.id === p.id ? ' comparativo' : '');
       btn.textContent = primeiroNome(p.nome);      btn.title = p.nome;
       btn.dataset.id = p.id;
-      btn.onclick = () => selecionarColab(p);
+      btn.onclick = () => {
+        if (modoComparativo && colabAtual !== null && colabAtual.id !== p.id) {
+          toggleComparativo(p);
+        } else {
+          selecionarColab(p);
+        }
+      };
       pillsEl.appendChild(btn);
     });
   }
@@ -508,10 +529,10 @@ function inicializar() {
     const btn = document.createElement('button');
     btn.className = 'colab-btn';
     btn.textContent = primeiroNome(p.nome);
-    btn.title = p.nome + ' • Clique duplo para comparar';
+    btn.title = p.nome;
     btn.dataset.id = p.id;
     btn.onclick = () => {
-      if (colabAtual !== null && colabAtual.id !== p.id) {
+      if (modoComparativo && colabAtual !== null && colabAtual.id !== p.id) {
         toggleComparativo(p);
       } else {
         selecionarColab(p);
@@ -539,7 +560,6 @@ function selecionarColab(pessoa) {
   colabAtual = pessoa;
   mesSelecionado = null;
   deselectComparativo();
-
   /* Atualiza botões */
   document.querySelectorAll('.colab-btn').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.btn-todos-colab').forEach(b => b.classList.toggle('active', pessoa === null));
@@ -666,13 +686,14 @@ function renderKPIsHtml(kpis) {
    COMPARATIVO ENTRE COLABORADORES
 =========================== */
 let colabComparativo = null; // segundo colaborador selecionado para comparar
+let modoComparativo  = false; // true = aguardando clique no segundo colaborador
 let chartBarComp, chartLineComp; // gráficos do comparativo
 
 function toggleComparativo(pessoa) {
-  /* Se já está em modo individual com colabAtual, ativa o comparativo */
   if (colabAtual === null) { selecionarColab(pessoa); return; }
   if (pessoa.id === colabAtual.id) { deselectComparativo(); return; }
 
+  modoComparativo  = false;
   colabComparativo = pessoa;
 
   /* Marca o segundo botão visualmente */
@@ -681,13 +702,40 @@ function toggleComparativo(pessoa) {
     if (+b.dataset.id === pessoa.id) b.classList.add('comparativo');
   });
 
+  /* Atualiza botão e esconde dica */
+  const btnComp = document.getElementById('btnComparar');
+  const dica    = document.getElementById('dicaComparativo');
+  if (btnComp) { btnComp.textContent = '✕ Cancelar comparativo'; btnComp.classList.add('ativo'); }
+  if (dica)    { dica.style.display = 'none'; }
+
   renderComparativo();
 }
 
+function ativarModoComparativo() {
+  if (colabAtual === null) return;
+  const btnComp = document.getElementById('btnComparar');
+  const dica    = document.getElementById('dicaComparativo');
+  if (modoComparativo) {
+    modoComparativo = false;
+    deselectComparativo();
+    return;
+  }
+  modoComparativo = true;
+  if (btnComp) { btnComp.textContent = '✕ Cancelar'; btnComp.classList.add('ativo'); }
+  if (dica)    { dica.style.display = 'flex'; }
+}
+
 function deselectComparativo() {
+  modoComparativo  = false;
   colabComparativo = null;
-  document.querySelectorAll('.colab-btn').forEach(b => b.classList.remove('comparativo'));
+  document.querySelectorAll('.colab-btn').forEach(b => { b.classList.remove('comparativo'); b.title = equipe.find(p => p.id === +b.dataset.id)?.nome || ''; });
   document.getElementById('comparativoSection').style.display = 'none';
+  const btnComp = document.getElementById('btnComparar');
+  const dica    = document.getElementById('dicaComparativo');
+  if (btnComp) { btnComp.textContent = '⚔️ Comparar'; btnComp.classList.remove('ativo'); }
+  if (dica)    { dica.style.display = 'none'; }
+  if (chartBarComp)  { chartBarComp.destroy();  chartBarComp  = null; }
+  if (chartLineComp) { chartLineComp.destroy(); chartLineComp = null; }
 }
 
 function renderComparativo() {
