@@ -525,7 +525,6 @@ function inicializar() {
 
   /* Exibe ranking inicial */
   selecionarColab(null);
-  renderResumoMesAtual();
 }
 
 function primeiroNome(nome) {
@@ -554,8 +553,10 @@ function selecionarColab(pessoa) {
     document.getElementById('individualSection').style.display = 'none';
     renderRanking();
     renderKPIsEquipe();
+    renderResumoMesAtual();
   } else {
     /* Modo individual */
+    document.getElementById('resumoMesAtual').style.display = 'none';
     document.getElementById('rankingSection').style.display = 'none';
     document.getElementById('individualSection').style.display = 'block';
     renderMesPills(pessoa.meses);
