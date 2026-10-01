@@ -89,11 +89,11 @@
         {
           "mes": 10,
           "nome": "Outubro",
-          "chamados": 2,
+          "chamados": 3,
           "ferias": 0,
           "diasTrabalhados": 22,
-          "chamadosPorDia": 0.09,
-          "chamadosNorm": 2
+          "chamadosPorDia": 0.14,
+          "chamadosNorm": 3
         }
       ]
     },
@@ -839,5 +839,5 @@
       ]
     }
   ],
-  "atualizado": "01/10/2026 09:30:54"
+  "atualizado": "01/10/2026 09:31:54"
 }
