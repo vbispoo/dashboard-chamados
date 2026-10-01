@@ -835,9 +835,18 @@
           "diasTrabalhados": 22,
           "chamadosPorDia": 2.59,
           "chamadosNorm": 57
+        },
+        {
+          "mes": 10,
+          "nome": "Outubro",
+          "chamados": 1,
+          "ferias": 0,
+          "diasTrabalhados": 22,
+          "chamadosPorDia": 0.05,
+          "chamadosNorm": 1
         }
       ]
     }
   ],
-  "atualizado": "01/10/2026 10:49:54"
+  "atualizado": "01/10/2026 10:50:55"
 }
