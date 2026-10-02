@@ -848,14 +848,14 @@
         {
           "mes": 10,
           "nome": "Outubro",
-          "chamados": 3,
+          "chamados": 4,
           "ferias": 0,
           "diasTrabalhados": 22,
-          "chamadosPorDia": 0.14,
-          "chamadosNorm": 3
+          "chamadosPorDia": 0.18,
+          "chamadosNorm": 4
         }
       ]
     }
   ],
-  "atualizado": "02/10/2026 14:06:54"
+  "atualizado": "02/10/2026 14:07:54"
 }
