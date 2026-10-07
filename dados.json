@@ -752,11 +752,11 @@
         {
           "mes": 10,
           "nome": "Outubro",
-          "chamados": 7,
+          "chamados": 8,
           "ferias": 0,
           "diasTrabalhados": 22,
-          "chamadosPorDia": 0.32,
-          "chamadosNorm": 7
+          "chamadosPorDia": 0.36,
+          "chamadosNorm": 8
         }
       ]
     },
@@ -848,14 +848,14 @@
         {
           "mes": 10,
           "nome": "Outubro",
-          "chamados": 10,
+          "chamados": 11,
           "ferias": 0,
           "diasTrabalhados": 22,
-          "chamadosPorDia": 0.45,
-          "chamadosNorm": 10
+          "chamadosPorDia": 0.5,
+          "chamadosNorm": 11
         }
       ]
     }
   ],
-  "atualizado": "07/10/2026 11:03:56"
+  "atualizado": "07/10/2026 11:04:56"
 }
