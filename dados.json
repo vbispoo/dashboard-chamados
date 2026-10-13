@@ -89,11 +89,11 @@
         {
           "mes": 10,
           "nome": "Outubro",
-          "chamados": 35,
+          "chamados": 36,
           "ferias": 0,
           "diasTrabalhados": 22,
-          "chamadosPorDia": 1.59,
-          "chamadosNorm": 35
+          "chamadosPorDia": 1.64,
+          "chamadosNorm": 36
         }
       ]
     },
@@ -281,11 +281,11 @@
         {
           "mes": 10,
           "nome": "Outubro",
-          "chamados": 40,
+          "chamados": 41,
           "ferias": 0,
           "diasTrabalhados": 22,
-          "chamadosPorDia": 1.82,
-          "chamadosNorm": 40
+          "chamadosPorDia": 1.86,
+          "chamadosNorm": 41
         }
       ]
     },
@@ -569,11 +569,11 @@
         {
           "mes": 10,
           "nome": "Outubro",
-          "chamados": 18,
+          "chamados": 19,
           "ferias": 0,
           "diasTrabalhados": 22,
-          "chamadosPorDia": 0.82,
-          "chamadosNorm": 18
+          "chamadosPorDia": 0.86,
+          "chamadosNorm": 19
         }
       ]
     },
@@ -665,11 +665,11 @@
         {
           "mes": 10,
           "nome": "Outubro",
-          "chamados": 24,
+          "chamados": 25,
           "ferias": 0,
           "diasTrabalhados": 22,
-          "chamadosPorDia": 1.09,
-          "chamadosNorm": 24
+          "chamadosPorDia": 1.14,
+          "chamadosNorm": 25
         }
       ]
     },
@@ -761,11 +761,11 @@
         {
           "mes": 10,
           "nome": "Outubro",
-          "chamados": 14,
+          "chamados": 15,
           "ferias": 0,
           "diasTrabalhados": 22,
-          "chamadosPorDia": 0.64,
-          "chamadosNorm": 14
+          "chamadosPorDia": 0.68,
+          "chamadosNorm": 15
         }
       ]
     },
@@ -866,5 +866,5 @@
       ]
     }
   ],
-  "atualizado": "13/10/2026 13:27:53"
+  "atualizado": "13/10/2026 13:50:26"
 }
