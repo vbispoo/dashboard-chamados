@@ -857,14 +857,14 @@
         {
           "mes": 10,
           "nome": "Outubro",
-          "chamados": 23,
+          "chamados": 24,
           "ferias": 0,
           "diasTrabalhados": 22,
-          "chamadosPorDia": 1.05,
-          "chamadosNorm": 23
+          "chamadosPorDia": 1.09,
+          "chamadosNorm": 24
         }
       ]
     }
   ],
-  "atualizado": "14/10/2026 10:33:56"
+  "atualizado": "14/10/2026 10:34:54"
 }
