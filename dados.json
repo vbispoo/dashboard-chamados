@@ -2,111 +2,6 @@
   "ok": true,
   "equipe": [
     {
-      "id": 25151,
-      "nome": "Caique Santos do Nascimento",
-      "meses": [
-        {
-          "mes": 1,
-          "nome": "Janeiro",
-          "chamados": 38,
-          "ferias": 0,
-          "diasTrabalhados": 22,
-          "chamadosPorDia": 1.73,
-          "chamadosNorm": 38
-        },
-        {
-          "mes": 2,
-          "nome": "Fevereiro",
-          "chamados": 62,
-          "ferias": 0,
-          "diasTrabalhados": 22,
-          "chamadosPorDia": 2.82,
-          "chamadosNorm": 62
-        },
-        {
-          "mes": 3,
-          "nome": "Março",
-          "chamados": 125,
-          "ferias": 0,
-          "diasTrabalhados": 22,
-          "chamadosPorDia": 5.68,
-          "chamadosNorm": 125
-        },
-        {
-          "mes": 4,
-          "nome": "Abril",
-          "chamados": 85,
-          "ferias": 0,
-          "diasTrabalhados": 22,
-          "chamadosPorDia": 3.86,
-          "chamadosNorm": 85
-        },
-        {
-          "mes": 5,
-          "nome": "Maio",
-          "chamados": 78,
-          "ferias": 0,
-          "diasTrabalhados": 22,
-          "chamadosPorDia": 3.55,
-          "chamadosNorm": 78
-        },
-        {
-          "mes": 6,
-          "nome": "Junho",
-          "chamados": 85,
-          "ferias": 0,
-          "diasTrabalhados": 22,
-          "chamadosPorDia": 3.86,
-          "chamadosNorm": 85
-        },
-        {
-          "mes": 7,
-          "nome": "Julho",
-          "chamados": 78,
-          "ferias": 0,
-          "diasTrabalhados": 22,
-          "chamadosPorDia": 3.55,
-          "chamadosNorm": 78
-        },
-        {
-          "mes": 8,
-          "nome": "Agosto",
-          "chamados": 70,
-          "ferias": 0,
-          "diasTrabalhados": 22,
-          "chamadosPorDia": 3.18,
-          "chamadosNorm": 70
-        },
-        {
-          "mes": 9,
-          "nome": "Setembro",
-          "chamados": 57,
-          "ferias": 0,
-          "diasTrabalhados": 22,
-          "chamadosPorDia": 2.59,
-          "chamadosNorm": 57
-        },
-        {
-          "mes": 10,
-          "nome": "Outubro",
-          "chamados": 105,
-          "ferias": 0,
-          "diasTrabalhados": 22,
-          "chamadosPorDia": 4.77,
-          "chamadosNorm": 105
-        },
-        {
-          "mes": 11,
-          "nome": "Novembro",
-          "chamados": 28,
-          "ferias": 0,
-          "diasTrabalhados": 22,
-          "chamadosPorDia": 1.27,
-          "chamadosNorm": 28
-        }
-      ]
-    },
-    {
       "id": 23416,
       "nome": "Carlos Vicente Esquaiella",
       "meses": [
@@ -962,5 +857,5 @@
       ]
     }
   ],
-  "atualizado": "16/11/2026 10:43:54"
+  "atualizado": "16/11/2026 10:45:03"
 }
