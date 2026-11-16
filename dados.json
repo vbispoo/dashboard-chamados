@@ -107,21 +107,6 @@
       ]
     },
     {
-      "id": 25446,
-      "nome": "Felipe Cavalcanti Rolim Alves",
-      "meses": [
-        {
-          "mes": 10,
-          "nome": "Outubro",
-          "chamados": 1,
-          "ferias": 0,
-          "diasTrabalhados": 22,
-          "chamadosPorDia": 0.05,
-          "chamadosNorm": 1
-        }
-      ]
-    },
-    {
       "id": 22132,
       "nome": "Gabriel Renée da Silva",
       "meses": [
@@ -857,5 +842,5 @@
       ]
     }
   ],
-  "atualizado": "16/11/2026 10:45:55"
+  "atualizado": "16/11/2026 10:46:16"
 }
