@@ -308,11 +308,11 @@
         {
           "mes": 11,
           "nome": "Novembro",
-          "chamados": 55,
+          "chamados": 56,
           "ferias": 0,
           "diasTrabalhados": 22,
-          "chamadosPorDia": 2.5,
-          "chamadosNorm": 55
+          "chamadosPorDia": 2.55,
+          "chamadosNorm": 56
         }
       ]
     },
@@ -842,5 +842,5 @@
       ]
     }
   ],
-  "atualizado": "18/11/2026 14:18:54"
+  "atualizado": "18/11/2026 14:19:53"
 }
