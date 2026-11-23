@@ -833,14 +833,14 @@
         {
           "mes": 11,
           "nome": "Novembro",
-          "chamados": 42,
+          "chamados": 43,
           "ferias": 0,
           "diasTrabalhados": 22,
-          "chamadosPorDia": 1.91,
-          "chamadosNorm": 42
+          "chamadosPorDia": 1.95,
+          "chamadosNorm": 43
         }
       ]
     }
   ],
-  "atualizado": "23/11/2026 12:30:56"
+  "atualizado": "23/11/2026 12:31:57"
 }
