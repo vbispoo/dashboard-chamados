@@ -203,11 +203,11 @@
         {
           "mes": 11,
           "nome": "Novembro",
-          "chamados": 70,
+          "chamados": 71,
           "ferias": 0,
           "diasTrabalhados": 22,
-          "chamadosPorDia": 3.18,
-          "chamadosNorm": 70
+          "chamadosPorDia": 3.23,
+          "chamadosNorm": 71
         }
       ]
     },
@@ -833,14 +833,14 @@
         {
           "mes": 11,
           "nome": "Novembro",
-          "chamados": 47,
+          "chamados": 48,
           "ferias": 0,
           "diasTrabalhados": 22,
-          "chamadosPorDia": 2.14,
-          "chamadosNorm": 47
+          "chamadosPorDia": 2.18,
+          "chamadosNorm": 48
         }
       ]
     }
   ],
-  "atualizado": "24/11/2026 12:29:53"
+  "atualizado": "24/11/2026 12:30:53"
 }
