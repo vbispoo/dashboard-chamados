@@ -203,11 +203,11 @@
         {
           "mes": 11,
           "nome": "Novembro",
-          "chamados": 72,
+          "chamados": 73,
           "ferias": 0,
           "diasTrabalhados": 22,
-          "chamadosPorDia": 3.27,
-          "chamadosNorm": 72
+          "chamadosPorDia": 3.32,
+          "chamadosNorm": 73
         }
       ]
     },
@@ -308,11 +308,11 @@
         {
           "mes": 11,
           "nome": "Novembro",
-          "chamados": 75,
+          "chamados": 76,
           "ferias": 0,
           "diasTrabalhados": 22,
-          "chamadosPorDia": 3.41,
-          "chamadosNorm": 75
+          "chamadosPorDia": 3.45,
+          "chamadosNorm": 76
         }
       ]
     },
@@ -842,5 +842,5 @@
       ]
     }
   ],
-  "atualizado": "24/11/2026 17:45:54"
+  "atualizado": "25/11/2026 09:01:57"
 }
